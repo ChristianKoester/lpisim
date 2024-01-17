@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
+import { QuestionService } from './shared/question.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'lpi-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'lpisim';
+  
+  constructor(private questionService: QuestionService) {
+  }
+
+  test() {
+    this.questionService.test();
+  }
 }
