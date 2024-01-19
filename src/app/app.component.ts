@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { QuestionService } from './shared/question.service';
 
 @Component({
   selector: 'lpi-root',
@@ -8,10 +7,5 @@ import { QuestionService } from './shared/question.service';
 })
 export class AppComponent {
   
-  constructor(private questionService: QuestionService) {
-  }
-
-  test() {
-    this.questionService.test();
-  }
+  constructor() {}
 }

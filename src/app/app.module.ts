@@ -6,10 +6,18 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LearnListComponent } from './learn/learn-list/learn-list.component';
+import { HomeComponent } from './home/home.component';
+import { HeaderComponent } from './header/header.component';
+import { LearnSingleComponent } from './learn/learn-single/learn-single.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LearnListComponent,
+    HomeComponent,
+    HeaderComponent,
+    LearnSingleComponent
   ],
   imports: [
     BrowserModule,

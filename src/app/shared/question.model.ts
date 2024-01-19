@@ -1,9 +1,9 @@
 export interface Question {
-  id: number,
+  qid: number,
   catalogue: string,
   type: string,
   question: string,
-  answers: {
+  choices: {
     answer: string, 
     correct: boolean,
   }[]

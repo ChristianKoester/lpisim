@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="card shadow my-2" *ngFor="let q of questions">
+    <div class="card-body">
+      <p class="list-group-item fs-5" style="white-space: pre-line;">{{ q.question }}</p>
+      <ng-container *ngIf="q.type === 'fill'; else elseTypeTempl">
+        <input class="form-control" disabled type="text" value="{{ q.choices[0].answer }}">
+      </ng-container>
+      <ng-template #elseTypeTempl>
+        <div class="card my-1" *ngFor="let a of q.choices" [ngStyle]="{backgroundColor: a.correct ? 'lightgreen' : 'transparent'}">
+          <p class="card-text p-2">{{ a.answer }}</p>
+        </div>
+      </ng-template>
+      <div class="text-end">
+        <span>Frage: {{ q.qid }} / {{ questions.length }}</span>
+      </div>
+    </div>
+  </div>
+</div>
