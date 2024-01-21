@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Question } from './question.model';
 
 @Injectable({
@@ -7,9 +7,7 @@ import { Question } from './question.model';
 export class FileParserService {
   private questions: Question[] = [];
 
-  constructor() {
-  }
-
+  constructor() {}
   
   getQuestions(): Question[] {
     this.parse('lpic101');

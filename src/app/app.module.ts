@@ -24,7 +24,7 @@ import { LearnSingleComponent } from './learn/learn-single/learn-single.componen
     AppRoutingModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false}
+      InMemoryDataService, { delay: 0 , dataEncapsulation: false}
     )
   ],
   providers: [],

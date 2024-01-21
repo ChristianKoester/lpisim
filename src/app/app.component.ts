@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InMemoryDataService } from './shared/in-memory-data.service';
 
 @Component({
   selector: 'lpi-root',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   
-  constructor() {}
+  constructor() { }
 }

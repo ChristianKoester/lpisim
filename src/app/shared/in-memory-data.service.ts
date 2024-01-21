@@ -10,8 +10,9 @@ export class InMemoryDataService implements InMemoryDbService {
   constructor(private fps: FileParserService) {}
 
   createDb() {
-    let questions = [];
-    questions = this.fps.getQuestions();
+    const questions = this.fps.getQuestions();
     return { questions } ;
   } 
+
+  //genid ??
 }
