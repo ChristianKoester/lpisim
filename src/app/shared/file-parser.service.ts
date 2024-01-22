@@ -5,31 +5,52 @@ import { Question } from './question.model';
   providedIn: 'root',
 })
 export class FileParserService {
-  private questions: Question[] = [];
-
   constructor() {}
-  
-  getQuestions(): Question[] {
-    this.parse('lpic101');
-    this.parse('lpic102');
-    return this.questions;
-  }
 
-  private parse(fileName: string) {
-    let lines: string[] = [];
-    fetch('/assets/' + fileName)
-      .then((response) => response.text())
+  getQuestions(collection: string): Promise<Question[]> {
+    const lines: string[] = [];
+    
+    return new Promise((resolve) => {
+      fetch('/assets/' + collection)
+      .then(response => response.text())
       .then((data) => {
         for (const line of data.split(/[\r\n]+/)) {
           if (line.length !== 0) {
             lines.push(line);
           }
         }
-        this.extractData(fileName, lines);
+        resolve(this.extractData(collection, lines));
       });
+    })
   }
 
-  private extractData(catalogue: string, data) {
+  // async getQuestions(collection: string): Promise<Question[]> {
+  //   const lines: string[] = [];
+  //   let questions: Question[] = []
+
+  //   async function fetchQuestions() {
+  //     const response = await fetch('/assets/' + collection);
+  //     const questions = await response.text();
+  //   return questions;
+  //   }
+    
+  //   return new Promise((resolve, reject) => {
+  //     fetchQuestions()
+  //     .then((data) => {
+  //       for (const line of data.split(/[\r\n]+/)) {
+  //         if (line.length !== 0) {
+  //           lines.push(line);
+  //         }
+  //       }
+  //       questions = this.extractData(collection, lines);
+  //       resolve(questions);
+  //     });
+  //   })
+  // }
+
+
+  private extractData(collection: string, data: string[]): Question[] {
+    let questions: Question[] = [];
     for (let i = 0; i < data.length; i++) {
       if (data[i].startsWith('QUESTION')) {
         // Extract ID
@@ -38,10 +59,7 @@ export class FileParserService {
         // Extract Question
         let question = '';
         i++;
-        while (
-          !data[i].startsWith('A. ') &&
-          !data[i].startsWith('Answer:')
-        ) {
+        while (!data[i].startsWith('A. ') && !data[i].startsWith('Answer:')) {
           question += data[i] + '\n\r';
           i++;
         }
@@ -103,15 +121,16 @@ export class FileParserService {
         // console.log('---');
 
         const q: Question = {
-          qid: id,
-          catalogue: catalogue,
+          id: id,
+          collection: collection,
           type: type,
           question: question,
           choices: choices,
         };
 
-        this.questions.push(q);
+        questions.push(q);
       }
     }
+    return questions;
   }
 }

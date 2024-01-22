@@ -1,6 +1,6 @@
 export interface Question {
-  qid: number,
-  catalogue: string,
+  id: number,
+  collection: string,
   type: string,
   question: string,
   choices: {

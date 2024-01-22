@@ -13,29 +13,10 @@ export class LearnListComponent implements OnInit {
   constructor(private qServ: QuestionService) {}
 
   ngOnInit(): void {
-    this.qServ.getQuestions().subscribe(
+    this.qServ.getQuestions('lpic101').subscribe(
       (data) => {
         this.questions = data;
       }
     );
-    // this.questions = this.mockQuestions();
   }
-
-  // private mockQuestions(): Question[] {
-  //   const q: Question = {
-  //     id: 1,
-  //     catalogue: 'mock101',
-  //     type: 'single',
-  //     question: `Which type of file system is created by mkfs when it is executed with the block device name only and
-  //     without any additional parameters?`,
-  //     choices: [
-  //       {answer: 'XFS', correct: true},
-  //       {answer: 'VFAT', correct: false},
-  //       {answer: 'ext2', correct: true},
-  //       {answer: 'ext3', correct: false},
-  //       {answer: 'ext4', correct: false},
-  //     ]
-  //   };
-  //   return [q,q,q];
-  // }
 }

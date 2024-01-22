@@ -18,7 +18,7 @@ export class LearnSingleComponent {
   getQuestion() {
     this.qServ.getQuestion(1).subscribe(
       (data) => {
-        this.question = data[0];
+        this.question = data;
       }
     );
   }
