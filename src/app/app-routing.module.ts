@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
   { path: 'learn/list', component: LearnListComponent },
-  { path: 'learn/single', component: LearnSingleComponent },
+  { path: 'learn/single', redirectTo: 'learn/single/1', pathMatch: 'full' },
+  { path: 'learn/single/:id', component: LearnSingleComponent },
 ];
 
 @NgModule({
