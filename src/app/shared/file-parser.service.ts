@@ -32,15 +32,15 @@ export class FileParserService {
         // Extract ID
         const id = +data[i].match('[0-9]+');
 
-        // Extract Question
+        // Extract question
         let question = '';
         i++;
         while (!data[i].startsWith('A. ') && !data[i].startsWith('Answer:')) {
-          question += data[i] + '\n\r';
+          question += data[i] + '\n';
           i++;
         }
 
-        // Extract Options
+        // Extract answers
         const choices: { answer: string; correct: boolean }[] = [];
         if (data[i].startsWith('A. ')) {
           do {
@@ -52,13 +52,13 @@ export class FileParserService {
           } while (!data[i].startsWith('Answer:'));
         }
 
-        // Extract Answer
+        // Extract Solution
         let solution = '';
         if (data[i].startsWith('Answer:')) {
           solution = data[i].substring(8);
         }
 
-        // Find out type and mark correct answers
+        // Find out type of question 
         let type = 'single';
         if (!choices.length) {
           type = 'fill';
@@ -67,27 +67,14 @@ export class FileParserService {
           if (solution.length > 1) {
             type = 'multi';
           }
+          // Mark correct answers
           for (let char of solution) {
-            switch (char) {
-              case 'A':
-                choices[0].correct = true;
-                break;
-              case 'B':
-                choices[1].correct = true;
-                break;
-              case 'C':
-                choices[2].correct = true;
-                break;
-              case 'D':
-                choices[3].correct = true;
-                break;
-              case 'E':
-                choices[4].correct = true;
-                break;
-            }
+            const pos = String.fromCharCode((char.charCodeAt(0) - 17));
+            choices[pos].correct = true;
           }
         }
 
+        // Build question object
         const q: Question = {
           id: id,
           collection: collection,
@@ -96,6 +83,7 @@ export class FileParserService {
           choices: choices,
         };
 
+        // Add question to list
         questions.push(q);
       }
     }

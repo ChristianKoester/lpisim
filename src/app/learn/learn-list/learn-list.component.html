@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card shadow my-2" *ngFor="let q of questions">
+  <div class="card shadow my-2" *ngFor="let q of questions$ | async as questions">
     <div class="card-body">
       <p class="list-group-item fs-5" style="white-space: pre-line;">{{ q.question }}</p>
       <ng-container *ngIf="q.type === 'fill'; else elseTypeTempl">
