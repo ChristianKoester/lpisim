@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../shared/question.service';
 import { Question } from '../../shared/question.model';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'lpi-learn-list',
@@ -11,9 +13,15 @@ import { Observable } from 'rxjs';
 export class LearnListComponent implements OnInit {
   questions$: Observable<Question[]>;
 
-  constructor(private qServ: QuestionService) {}
+  constructor(
+    private qServ: QuestionService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.questions$ = this.qServ.getQuestions('lpic101');
+    this.route.paramMap.subscribe(params => {
+      const collection = params.get('collection');
+      this.questions$ = this.qServ.getQuestions(collection);
+    });
   }
 }

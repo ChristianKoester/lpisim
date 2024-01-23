@@ -7,9 +7,9 @@ import { LearnSingleComponent } from './learn/learn-single/learn-single.componen
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
-  { path: 'learn/list', component: LearnListComponent },
-  { path: 'learn/single', redirectTo: 'learn/single/1', pathMatch: 'full' },
-  { path: 'learn/single/:id', component: LearnSingleComponent },
+  { path: 'learn/list/:collection', component: LearnListComponent },
+  { path: 'learn/single/:collection', redirectTo: 'learn/single/:collection/1', pathMatch: 'full' },
+  { path: 'learn/single/:collection/:id', component: LearnSingleComponent },
 ];
 
 @NgModule({

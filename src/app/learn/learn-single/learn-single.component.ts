@@ -12,7 +12,8 @@ import { Observable } from 'rxjs';
 export class LearnSingleComponent {
   question$: Observable<Question>;
   showSolution: boolean = false;
-  id: number;
+  collection: string = '';
+  id: number = 1;
 
   constructor(
     private qServ: QuestionService,
@@ -23,8 +24,9 @@ export class LearnSingleComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = +params.get('id');
+      this.collection = params.get('collection');
       this.showSolution = false;
-      this.question$ = this.qServ.getQuestion('lpic101', this.id);
+      this.question$ = this.qServ.getQuestion(this.collection, this.id);
     });
   }
 
@@ -33,10 +35,10 @@ export class LearnSingleComponent {
   }
 
   onNextQuestion() {
-    this.router.navigateByUrl(`/learn/single/${this.id + 1}`);
+    this.router.navigateByUrl(`/learn/single/${this.collection}/${this.id + 1}`);
   }
 
   onPreviousQuestion() {
-    this.router.navigateByUrl(`/learn/single/${this.id - 1}`);
+    this.router.navigateByUrl(`/learn/single/${this.collection}/${this.id - 1}`);
   }
 }

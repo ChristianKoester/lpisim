@@ -1,14 +1,25 @@
+//Angular
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { FormsModule } from '@angular/forms';
 import { InMemoryDataService } from './shared/in-memory-data.service';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
+//PrimeNG
+import { MenubarModule } from 'primeng/menubar';
+import { CardModule } from 'primeng/card';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextModule } from 'primeng/inputtext';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ButtonModule } from 'primeng/button';
+
+//App
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LearnListComponent } from './learn/learn-list/learn-list.component';
-import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
+import { LearnListComponent } from './learn/learn-list/learn-list.component';
 import { LearnSingleComponent } from './learn/learn-single/learn-single.component';
 
 @NgModule({
@@ -17,15 +28,22 @@ import { LearnSingleComponent } from './learn/learn-single/learn-single.componen
     LearnListComponent,
     HomeComponent,
     HeaderComponent,
-    LearnSingleComponent
+    LearnSingleComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { delay: 0 , dataEncapsulation: false}
-    )
+    ),
+    MenubarModule,
+    CardModule,
+    BrowserAnimationsModule,
+    FieldsetModule,
+    InputTextModule,
+    ButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
