@@ -21,6 +21,11 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LearnListComponent } from './learn/learn-list/learn-list.component';
 import { LearnSingleComponent } from './learn/learn-single/learn-single.component';
+import { CheckComponent } from './quiz/check/check.component';
+import { ExamComponent } from './quiz/exam/exam.component';
+import { SingleChoiceComponent } from './quiz/shared/single-choice/single-choice.component';
+import { MultiChoiceComponent } from './quiz/shared/multi-choice/multi-choice.component';
+import { FillInComponent } from './quiz/shared/fill-in/fill-in.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,11 @@ import { LearnSingleComponent } from './learn/learn-single/learn-single.componen
     HomeComponent,
     HeaderComponent,
     LearnSingleComponent,
+    CheckComponent,
+    ExamComponent,
+    SingleChoiceComponent,
+    MultiChoiceComponent,
+    FillInComponent,
   ],
   imports: [
     BrowserModule,
