@@ -4,6 +4,7 @@
       <p style="white-space: pre-line">{{ q.question }}</p>
       <ng-container *ngIf="q.type === 'fill'; else elseTypeTempl">
         <input
+          class="mb-3"
           pInputText
           type="text"
           disabled
@@ -11,19 +12,20 @@
         />
       </ng-container>
       <ng-template #elseTypeTempl>
-        <div
-          class=""
-          *ngFor="let a of q.choices"
-          [ngStyle]="{
-            backgroundColor: a.correct  && showSolution ? 'lightgreen' : 'transparent'
-          }">
-          <p class="card-text p-2 border-1 border-round">{{ a.answer }}</p>
+        <div *ngFor="let a of q.choices">
+          <p 
+            class="card-text p-2 border-1 border-round overflow-hidden" 
+            [ngClass]="{'bg-green-200': a.correct  && showSolution}">
+            {{ a.answer }}
+          </p>
         </div>
       </ng-template>
       <div class="grid">
         <div class="col-4 text-left">
           <p-button 
-            label="Zurück" 
+            size="small"
+            raised="true"
+            severity="secondary"
             icon="pi pi-caret-left"
             [disabled]="q.id <= 1"
             (click)="onPreviousQuestion()">
@@ -32,13 +34,18 @@
         <div class="col-4 text-center">
           <p-button 
             label="Lösung" 
+            size="small"
+            raised="true"
+            severity="success"
             icon="pi pi-verified"
             (click)="onToggleSolution()">
           </p-button>
         </div>
         <div class="col-4 text-right">
           <p-button 
-            label="Weiter" 
+            size="small"
+            raised="true"
+            severity="secondary"
             icon="pi pi-caret-right" 
             iconPos="right"
             [disabled]="q.id >= 120" 

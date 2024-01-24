@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem, PrimeIcons } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'lpi-header',
@@ -38,10 +38,12 @@ export class HeaderComponent implements OnInit {
           },
           {
             label: 'Check',
+            routerLink: 'check/lpic101',
             icon: 'pi pi-fw pi-check-circle',
           },
           {
             label: 'Exam',
+            routerLink: 'exam/lpic101',
             icon: 'pi pi-fw pi-pencil',
           },
         ],
@@ -68,10 +70,12 @@ export class HeaderComponent implements OnInit {
           },
           {
             label: 'Check',
+            routerLink: 'check/lpic102',
             icon: 'pi pi-fw pi-check-circle',
           },
           {
             label: 'Exam',
+            routerLink: 'exam/lpic102',
             icon: 'pi pi-fw pi-pencil',
           },
         ],

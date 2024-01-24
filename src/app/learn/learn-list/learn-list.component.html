@@ -12,13 +12,12 @@
           />
         </ng-container>
         <ng-template #elseTypeTempl>
-          <div
-            class=""
-            *ngFor="let a of q.choices"
-            [ngStyle]="{
-              backgroundColor: a.correct ? 'lightgreen' : 'transparent'
-            }">
-            <p class="card-text p-2 border-1 border-round">{{ a.answer }}</p>
+          <div *ngFor="let a of q.choices">
+            <p 
+              class="card-text p-2 border-1 border-round overflow-hidden"
+              [ngClass]="{'bg-green-200': a.correct}">
+              {{ a.answer }}
+            </p>
           </div>
         </ng-template>
       </p-fieldset>
