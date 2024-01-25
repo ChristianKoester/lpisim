@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionService } from '../../shared/question.service';
-import { Question } from '../../shared/question.model';
+import { QuestionService } from '../../../shared/question.service';
+import { Question } from '../../../shared/question.model';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 

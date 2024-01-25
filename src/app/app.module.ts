@@ -17,20 +17,21 @@ import { RippleModule } from 'primeng/ripple';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
 
 //App
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
-import { LearnListComponent } from './learn/learn-list/learn-list.component';
-import { LearnSingleComponent } from './learn/learn-single/learn-single.component';
+import { LearnListComponent } from './modus/learn/learn-list/learn-list.component';
+import { LearnSingleComponent } from './modus/learn/learn-single/learn-single.component';
 import { CheckComponent } from './modus/check/check.component';
 import { ExamComponent } from './modus/exam/exam.component';
 import { SingleChoiceComponent } from './modus/shared/single-choice/single-choice.component';
 import { MultiChoiceComponent } from './modus/shared/multi-choice/multi-choice.component';
 import { FillInComponent } from './modus/shared/fill-in/fill-in.component';
-
+import { ResultComponent } from './modus/shared/result/result.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { FillInComponent } from './modus/shared/fill-in/fill-in.component';
     SingleChoiceComponent,
     MultiChoiceComponent,
     FillInComponent,
+    ResultComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +66,7 @@ import { FillInComponent } from './modus/shared/fill-in/fill-in.component';
     RadioButtonModule,
     CheckboxModule,
     DialogModule,
+    ToastModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

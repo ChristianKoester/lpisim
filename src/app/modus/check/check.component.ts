@@ -1,73 +1,73 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from '../../shared/question.model';
-import { QuestionService } from '../../shared/question.service';
-import { FillInComponent } from '../../modus/shared/fill-in/fill-in.component';
-import { MultiChoiceComponent } from '../../modus/shared/multi-choice/multi-choice.component';
-import { SingleChoiceComponent } from '../../modus/shared/single-choice/single-choice.component';
+import { Subscription } from 'rxjs';
+import { ModusHandlingService } from '../shared/modus-handling.service';
 
 @Component({
   selector: 'lpi-check',
   templateUrl: './check.component.html',
   styleUrl: './check.component.css'
 })
-export class CheckComponent {
-  @ViewChild(SingleChoiceComponent) single: SingleChoiceComponent;
-  @ViewChild(MultiChoiceComponent) multi: MultiChoiceComponent;
-  @ViewChild(FillInComponent) fill: FillInComponent;
-
-  questions: Question[];
+export class CheckComponent implements OnInit, OnDestroy {
+  private subRoute: Subscription;
+  private subQuestion: Subscription;
+  private subValidation: Subscription;
   question: Question;
-  id: number = 1;
+  numberQuestions: number;
   dialogVisible: boolean = false;
 
-  constructor(private qServ: QuestionService, private route: ActivatedRoute) {}
+  constructor(
+    private modusHandler: ModusHandlingService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const collection = params.get('collection');
-      this.qServ.getQuestions(collection).subscribe((questions) => {
-        this.questions = questions;
-        this.question = this.questions.find((value) => value.id === this.id);
-      });
+    this.subRoute = this.route.paramMap.subscribe(params => 
+      this.modusHandler.loadQuestions(params.get('collection')
+    ));
+    this.subQuestion = this.modusHandler.question$.subscribe(question => {
+      this.question = question;
+      this.numberQuestions = this.modusHandler.questions.length;
     });
+    this.subValidation = this.modusHandler.validationComplete$.subscribe(() =>
+      this.handleValidation()
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subRoute.unsubscribe();
+    this.subQuestion.unsubscribe();
+    this.subValidation.unsubscribe();
   }
 
   onNextQuestion() {
-    this.id < this.questions.length ? this.id++ : this.id;
-    this.question = this.questions.find((value) => value.id === this.id);
+    this.modusHandler.nextQuestion();
   }
 
   onPreviousQuestion() {
-    this.id > 1 ? this.id-- : this.id;
-    this.question = this.questions.find((value) => value.id === this.id);
+    this.modusHandler.previousQuestion();
   }
 
-  onExit() {}
-  
-  onSkip() {}
+  onExit() {
+    console.log('show results')
+  }
+
+  onSkip() {
+    console.log('enqueue skiplist')
+  }
 
   onSubmit() {
-    switch (this.question.type) {
-      case 'single':
-        this.single.validateForm();
-        break;
-      case 'multi':
-        this.multi.validateForm();
-        break;
-      case 'fill':
-        this.fill.validateForm();
-        break;
-    }
+    this.modusHandler.validate()
   }
 
-  onValidationComplete(valid: string) {
-    if (valid === 'OK') {
-      this.onNextQuestion();
+  handleValidation() {
+    if (this.modusHandler.valid) {
+      this.modusHandler.nextQuestion();
     }
     else {
       this.dialogVisible = true;
-      this.onPreviousQuestion();
+      this.modusHandler.previousQuestion();
     }
   }
 }

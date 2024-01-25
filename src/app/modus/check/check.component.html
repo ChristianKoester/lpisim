@@ -1,27 +1,15 @@
 <div class="grid mb-2">
   <div class="col-8 col-offset-2" *ngIf="question">
-    <p-fieldset legend="Frage {{ question.id }} / {{ questions.length }}">
+    <p-fieldset legend="Frage {{ question.id }} / {{ numberQuestions }}">
       <ng-container [ngSwitch]="question.type">
         <div *ngSwitchCase="'single'">
-          <lpi-single-choice
-            [question]="question"
-            (onValidationComplete)="onValidationComplete($event)"
-          >
-          </lpi-single-choice>
+          <lpi-single-choice></lpi-single-choice>
         </div>
         <div *ngSwitchCase="'multi'">
-          <lpi-multi-choice
-            [question]="question"
-            (onValidationComplete)="onValidationComplete($event)"
-          >
-          </lpi-multi-choice>
+          <lpi-multi-choice></lpi-multi-choice>
         </div>
         <div *ngSwitchCase="'fill'">
-          <lpi-fill-in
-            [question]="question"
-            (onValidationComplete)="onValidationComplete($event)"
-          >
-          </lpi-fill-in>
+          <lpi-fill-in></lpi-fill-in>
         </div>
       </ng-container>
       <div class="grid">
@@ -43,7 +31,7 @@
             severity="secondary"
             icon="pi pi-caret-right"
             iconPos="right"
-            [disabled]="question.id >= questions.length"
+            [disabled]="question.id >= numberQuestions"
             (click)="onNextQuestion()"
           ></p-button>
           <p-button
@@ -52,6 +40,7 @@
             severity="danger"
             label="Beenden"
             icon="pi pi-times"
+            routerLink="/check/result"
             (click)="onExit()"
           >
           </p-button>

@@ -1,74 +1,79 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Question } from '../../shared/question.model';
-import { QuestionService } from '../../shared/question.service';
 import { ActivatedRoute } from '@angular/router';
-import { SingleChoiceComponent } from '../../modus/shared/single-choice/single-choice.component';
-import { MultiChoiceComponent } from '../../modus/shared/multi-choice/multi-choice.component';
-import { FillInComponent } from '../../modus/shared/fill-in/fill-in.component';
+import { ModusHandlingService } from '../shared/modus-handling.service';
+import { Subscription } from 'rxjs';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'lpi-exam',
   templateUrl: './exam.component.html',
   styleUrl: './exam.component.css',
+  providers: [MessageService]
 })
-export class ExamComponent implements OnInit {
-  @ViewChild(SingleChoiceComponent) single: SingleChoiceComponent;
-  @ViewChild(MultiChoiceComponent) multi: MultiChoiceComponent;
-  @ViewChild(FillInComponent) fill: FillInComponent;
-
-  questions: Question[];
+export class ExamComponent implements OnInit, OnDestroy {
+  private subRoute: Subscription;
+  private subQuestion: Subscription;
+  private subValidation: Subscription;
   question: Question;
-  id: number = 1;
+  numberQuestions: number;
   dialogVisible: boolean = false;
 
-  constructor(private qServ: QuestionService, private route: ActivatedRoute) {}
+  constructor(
+    private modusHandler: ModusHandlingService,
+    private route: ActivatedRoute,
+    private messageService: MessageService,
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const collection = params.get('collection');
-      this.qServ.getQuestions(collection).subscribe((questions) => {
-        this.questions = questions;
-        this.question = this.questions.find((value) => value.id === this.id);
-      });
+    this.subRoute = this.route.paramMap.subscribe(params => 
+      this.modusHandler.loadQuestions(params.get('collection')
+    ));
+    this.subQuestion = this.modusHandler.question$.subscribe(question => {
+      this.question = question;
+      this.numberQuestions = this.modusHandler.questions.length;
     });
+    this.subValidation = this.modusHandler.validationComplete$.subscribe(() =>
+      this.handleValidation()
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subRoute.unsubscribe();
+    this.subQuestion.unsubscribe();
+    this.subValidation.unsubscribe();
   }
 
   onNextQuestion() {
-    this.id < this.questions.length ? this.id++ : this.id;
-    this.question = this.questions.find((value) => value.id === this.id);
+    this.modusHandler.nextQuestion();
   }
 
   onPreviousQuestion() {
-    this.id > 1 ? this.id-- : this.id;
-    this.question = this.questions.find((value) => value.id === this.id);
+    this.modusHandler.previousQuestion();
   }
 
-  onExit() {}
+  onExit() {
+    console.log('show results')
+  }
 
-  onSkip() {}
+  onSkip() {
+    console.log('enqueue skiplist')
+    this.messageService.add({ key: 'tc', severity: 'info', summary: 'Frage übersprungen', detail: 'Die Frage wurde für später vorgemerkt.' });
+    this.modusHandler.nextQuestion();
+  }
 
   onSubmit() {
-    switch (this.question.type) {
-      case 'single':
-        this.single.validateForm();
-        break;
-      case 'multi':
-        this.multi.validateForm();
-        break;
-      case 'fill':
-        this.fill.validateForm();
-        break;
-    }
+    this.modusHandler.validate()
   }
 
-  onValidationComplete(valid: string) {
-    if (valid === 'OK') {
-      this.onNextQuestion();
+  handleValidation() {
+    if (this.modusHandler.valid) {
+      this.modusHandler.nextQuestion();
     }
     else {
       this.dialogVisible = true;
-      this.onPreviousQuestion();
+      this.modusHandler.previousQuestion();
     }
   }
 }
