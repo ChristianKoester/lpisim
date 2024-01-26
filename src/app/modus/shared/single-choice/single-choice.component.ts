@@ -17,8 +17,8 @@ export class SingleChoiceComponent implements OnDestroy {
   constructor(private modusHandler: ModusHandlingService) {
     this.subQuestion = this.modusHandler.question$.subscribe((question) => {
       if (question.type === 'single') {
-        console.log('single / id: ' + question.id);
         this.question = question;
+        // TODO: Falls Frage schon beantwortet an dieser Stelle setzen ?!
         this.selectedAnswer = null;
       }
     });
@@ -42,11 +42,7 @@ export class SingleChoiceComponent implements OnDestroy {
       this.modusHandler.valid = false;
     }
 
-    console.log('validator: single; question: ' + this.question.id);
-    console.log(this.question);
-    console.log(this.selectedAnswer);
-    console.log(this.modusHandler.valid);
-
+    this.modusHandler.addToAnswers([this.selectedAnswer?.toString()]);
     this.modusHandler.validationComplete();
   }
 }

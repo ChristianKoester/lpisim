@@ -1,37 +1,39 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Question } from '../../shared/question.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModusHandlingService } from '../shared/modus-handling.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
-
 
 @Component({
   selector: 'lpi-exam',
   templateUrl: './exam.component.html',
   styleUrl: './exam.component.css',
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class ExamComponent implements OnInit, OnDestroy {
   private subRoute: Subscription;
   private subQuestion: Subscription;
   private subValidation: Subscription;
   question: Question;
+  questionIndex: number;
   numberQuestions: number;
   dialogVisible: boolean = false;
 
   constructor(
     private modusHandler: ModusHandlingService,
     private route: ActivatedRoute,
-    private messageService: MessageService,
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
-    this.subRoute = this.route.paramMap.subscribe(params => 
-      this.modusHandler.loadQuestions(params.get('collection')
-    ));
-    this.subQuestion = this.modusHandler.question$.subscribe(question => {
+    this.subRoute = this.route.paramMap.subscribe((params) => {
+      this.modusHandler.loadQuestions(params.get('collection'), false, 2);
+    });
+    this.subQuestion = this.modusHandler.question$.subscribe((question) => {
       this.question = question;
+      this.questionIndex = this.modusHandler.currentIndex;
       this.numberQuestions = this.modusHandler.questions.length;
     });
     this.subValidation = this.modusHandler.validationComplete$.subscribe(() =>
@@ -54,26 +56,33 @@ export class ExamComponent implements OnInit, OnDestroy {
   }
 
   onExit() {
-    console.log('show results')
+    console.log('show results');
   }
 
   onSkip() {
-    console.log('enqueue skiplist')
-    this.messageService.add({ key: 'tc', severity: 'info', summary: 'Frage übersprungen', detail: 'Die Frage wurde für später vorgemerkt.' });
+    this.modusHandler.addToSkip();
+    this.messageService.add({
+      key: 'tc',
+      severity: 'info',
+      summary: 'Frage übersprungen',
+      detail: 'Die Frage wurde für später vorgemerkt.',
+    });
     this.modusHandler.nextQuestion();
   }
 
   onSubmit() {
-    this.modusHandler.validate()
+      this.modusHandler.validate();
   }
 
   handleValidation() {
-    if (this.modusHandler.valid) {
+    const falseAnswers = this.modusHandler.selectedAnswers.filter((val) => !val.correct).length;
+    if (
+      falseAnswers >= this.numberQuestions * 0.2 ||
+      this.questionIndex === this.numberQuestions - 1
+    ) {
+      this.router.navigateByUrl('/exam/result');
+    } else {
       this.modusHandler.nextQuestion();
-    }
-    else {
-      this.dialogVisible = true;
-      this.modusHandler.previousQuestion();
     }
   }
 }

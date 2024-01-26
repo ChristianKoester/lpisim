@@ -17,7 +17,6 @@ export class MultiChoiceComponent implements OnDestroy {
   constructor(private modusHandler: ModusHandlingService) {
     this.subQuestion = this.modusHandler.question$.subscribe((question) => {
       if (question.type === 'multi') {
-        console.log('multi / id: ' + question.id);
         this.question = question;
         this.selectedAnswers = [];
       }
@@ -42,16 +41,12 @@ export class MultiChoiceComponent implements OnDestroy {
       }
     }
 
-    console.log('validator: multi; question: ' + this.question.id);
-    console.log(this.question);
-    console.log(this.selectedAnswers);
-    console.log(valid);
-
     if (valid) {
       this.modusHandler.valid = true;
     } else {
       this.modusHandler.valid = false;
     }
+    this.modusHandler.addToAnswers(this.selectedAnswers.map(value => value.toString()));
     this.modusHandler.validationComplete();
   }
 }

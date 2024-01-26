@@ -17,7 +17,6 @@ export class FillInComponent implements OnDestroy {
   constructor(private modusHandler: ModusHandlingService) {
     this.subQuestion = this.modusHandler.question$.subscribe((question) => {
       if (question.type === 'fill') {
-        console.log('fill / id: ' + question.id);
         this.question = question;
         this.givenAnswer = '';
       }
@@ -39,11 +38,7 @@ export class FillInComponent implements OnDestroy {
       this.modusHandler.valid = false;
     }
 
-    console.log('validator: fill; question: ' + this.question.id);
-    console.log(this.question);
-    console.log(this.givenAnswer);
-    console.log(this.modusHandler.valid);
-
+    this.modusHandler.addToAnswers([this.givenAnswer]);
     this.modusHandler.validationComplete();
   }
 }

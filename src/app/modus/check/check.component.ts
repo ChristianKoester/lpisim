@@ -7,7 +7,7 @@ import { ModusHandlingService } from '../shared/modus-handling.service';
 @Component({
   selector: 'lpi-check',
   templateUrl: './check.component.html',
-  styleUrl: './check.component.css'
+  styleUrl: './check.component.css',
 })
 export class CheckComponent implements OnInit, OnDestroy {
   private subRoute: Subscription;
@@ -19,14 +19,14 @@ export class CheckComponent implements OnInit, OnDestroy {
 
   constructor(
     private modusHandler: ModusHandlingService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.subRoute = this.route.paramMap.subscribe(params => 
-      this.modusHandler.loadQuestions(params.get('collection')
-    ));
-    this.subQuestion = this.modusHandler.question$.subscribe(question => {
+    this.subRoute = this.route.paramMap.subscribe((params) =>
+      this.modusHandler.loadQuestions(params.get('collection'), false)
+    );
+    this.subQuestion = this.modusHandler.question$.subscribe((question) => {
       this.question = question;
       this.numberQuestions = this.modusHandler.questions.length;
     });
@@ -50,22 +50,21 @@ export class CheckComponent implements OnInit, OnDestroy {
   }
 
   onExit() {
-    console.log('show results')
+    console.log('show results');
   }
 
   onSkip() {
-    console.log('enqueue skiplist')
+    console.log('enqueue skiplist');
   }
 
   onSubmit() {
-    this.modusHandler.validate()
+    this.modusHandler.validate();
   }
 
   handleValidation() {
     if (this.modusHandler.valid) {
       this.modusHandler.nextQuestion();
-    }
-    else {
+    } else {
       this.dialogVisible = true;
       this.modusHandler.previousQuestion();
     }
