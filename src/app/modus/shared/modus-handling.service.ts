@@ -31,11 +31,11 @@ export class ModusHandlingService {
 
   constructor(private qServ: QuestionService) {}
 
-  loadQuestions(collection: string, random: boolean, questionCount?: number) {
+  loadQuestions(collection: string, shuffle: boolean, questionCount?: number) {
     this.qServ.getQuestions(collection).subscribe((questions) => {
       this.questions = questions;
-      if (random) {
-        this.randomizeQuestions();
+      if (shuffle) {
+        this.shuffleQuestions();
       }
       if (typeof questionCount !== 'undefined') {
         if (questionCount < questions.length) {
@@ -69,6 +69,13 @@ export class ModusHandlingService {
     this._question$.next(this.currentQuestion);
   }
 
+  specificQuestion(id: number) {
+    const index = this.questions.findIndex(val => val.id === id);
+    this.currentQuestion = this.questions[index];
+    this.currentIndex = index;
+    this._question$.next(this.currentQuestion);
+  }
+
   validate() {
     this._startValidation$.next(this.currentQuestion.type);
   }
@@ -88,7 +95,9 @@ export class ModusHandlingService {
   }
 
   addToAnswers(answers: string[]) {
-    const existIndex = this.selectedAnswers.findIndex((val) => val.qid === this.currentQuestion.id);
+    const existIndex = this.selectedAnswers.findIndex(
+      (val) => val.qid === this.currentQuestion.id
+    );
     if (existIndex === -1) {
       this.selectedAnswers.push({
         qid: this.currentQuestion.id,
@@ -105,7 +114,7 @@ export class ModusHandlingService {
     console.log(this.selectedAnswers);
   }
 
-  private randomizeQuestions() {
+  private shuffleQuestions() {
     let currentIndex = this.questions.length;
     let randomIndex: number;
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Question } from '../../../shared/question.model';
 import { ModusHandlingService } from '../modus-handling.service';
 import { Subscription } from 'rxjs';
@@ -8,28 +8,30 @@ import { Subscription } from 'rxjs';
   templateUrl: './single-choice.component.html',
   styleUrl: './single-choice.component.css',
 })
-export class SingleChoiceComponent implements OnDestroy {
+export class SingleChoiceComponent implements OnInit, OnDestroy {
   private subQuestion: Subscription;
-  private subValidaton: Subscription;
+  private subValidation: Subscription;
   question: Question;
   selectedAnswer: number;
 
-  constructor(private modusHandler: ModusHandlingService) {
+  constructor(private modusHandler: ModusHandlingService) {}
+  
+  ngOnInit(): void {
     this.subQuestion = this.modusHandler.question$.subscribe((question) => {
       if (question.type === 'single') {
         this.question = question;
-        // TODO: Falls Frage schon beantwortet an dieser Stelle setzen ?!
-        this.selectedAnswer = null;
+        const answeredIndex = this.modusHandler.selectedAnswers.findIndex(val => val.qid === question.id);
+        this.selectedAnswer = answeredIndex !== -1 ? +this.modusHandler.selectedAnswers[answeredIndex].answers[0] : null;
       }
     });
-    this.subValidaton = this.modusHandler.startValidation$.subscribe((type) => {
+    this.subValidation = this.modusHandler.startValidation$.subscribe((type) => {
       if (type === 'single') this.validateAnswer();
-    });
+    });   
   }
 
   ngOnDestroy(): void {
     this.subQuestion.unsubscribe();
-    this.subValidaton.unsubscribe();
+    this.subValidation.unsubscribe();
   }
 
   validateAnswer() {

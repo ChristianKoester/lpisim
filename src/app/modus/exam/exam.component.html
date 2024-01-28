@@ -1,7 +1,7 @@
 <div class="grid mb-2">
   <div class="col-8 col-offset-2" *ngIf="question">
     <p-fieldset legend="Frage {{ questionIndex + 1 }} / {{ numberQuestions }}">
-      <ng-container [ngSwitch]="question.type">
+      <div style="min-height: 400px" [ngSwitch]="question.type">
         <div *ngSwitchCase="'single'">
           <lpi-single-choice> </lpi-single-choice>
         </div>
@@ -11,7 +11,7 @@
         <div *ngSwitchCase="'fill'">
           <lpi-fill-in> </lpi-fill-in>
         </div>
-      </ng-container>
+      </div>
       <div class="grid">
         <div class="col-6 text-left">
           <p-button
@@ -46,8 +46,14 @@
           </p-button>
         </div>
         <div class="col-6 text-right">
-          <p-toast position="top-center" key="tc"></p-toast>
-          <p-button
+          <p-splitButton 
+            styleClass="p-button-raised p-button-sm p-button-warning mr-3"
+            label="Überspringen"
+            icon="pi pi-hourglass"
+            (onClick)="onSkip()"
+            [model]="items">
+          </p-splitButton>
+          <!-- <p-button
             class="mr-3"
             size="small"
             raised="true"
@@ -56,9 +62,11 @@
             icon="pi pi-hourglass"
             (click)="onSkip()"
           >
-          </p-button>
+          </p-button> -->
           <p-button
-            [label]="(questionIndex === numberQuestions - 1) ? 'Beenden' : 'Antworten'"
+            [label]="
+              questionIndex === numberQuestions - 1 ? 'Beenden' : 'Antworten'
+            "
             size="small"
             raised="true"
             severity="success"
@@ -71,6 +79,9 @@
     </p-fieldset>
   </div>
 </div>
+
+<p-toast position="top-center" key="tc"></p-toast>
+
 <p-dialog
   header="Header"
   [(visible)]="dialogVisible"
@@ -94,3 +105,11 @@
     ></p-button>
   </ng-template>
 </p-dialog>
+
+<p-sidebar [(visible)]="sidebarVisible">
+  <h3>Übersprungene Fragen</h3>
+  <div *ngFor="let skipQ of skipped; index as i">
+    <p-button (click)="onSpecificQuestion(i)"> Frage {{ skipQ.id }} </p-button>
+  </div>
+</p-sidebar>
+<!-- <p-button (click)="sidebarVisible = true" icon="pi pi-arrow-right"></p-button> -->

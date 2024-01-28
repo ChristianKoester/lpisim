@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Question } from '../../../shared/question.model';
 import { ModusHandlingService } from '../modus-handling.service';
 import { Subscription } from 'rxjs';
@@ -8,17 +8,21 @@ import { Subscription } from 'rxjs';
   templateUrl: './multi-choice.component.html',
   styleUrl: './multi-choice.component.css',
 })
-export class MultiChoiceComponent implements OnDestroy {
+export class MultiChoiceComponent implements OnInit, OnDestroy {
   private subQuestion: Subscription;
   private subValidaton: Subscription;
   question: Question;
   selectedAnswers: number[] = [];
 
-  constructor(private modusHandler: ModusHandlingService) {
+  constructor(private modusHandler: ModusHandlingService) {}
+  
+  ngOnInit(): void {
     this.subQuestion = this.modusHandler.question$.subscribe((question) => {
       if (question.type === 'multi') {
         this.question = question;
+        const answeredIndex = this.modusHandler.selectedAnswers.findIndex(val => val.qid === question.id);
         this.selectedAnswers = [];
+        this.modusHandler.selectedAnswers[answeredIndex]?.answers.map((answer => this.selectedAnswers.push(+answer)));
       }
     });
     this.subValidaton = this.modusHandler.startValidation$.subscribe((type) => {

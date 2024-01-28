@@ -18,6 +18,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
+import { ChartModule } from 'primeng/chart';
+import { SidebarModule } from 'primeng/sidebar';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 //App
 import { AppRoutingModule } from './app-routing.module';
@@ -67,6 +70,9 @@ import { ResultComponent } from './modus/shared/result/result.component';
     CheckboxModule,
     DialogModule,
     ToastModule,
+    ChartModule,
+    SidebarModule,
+    SplitButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

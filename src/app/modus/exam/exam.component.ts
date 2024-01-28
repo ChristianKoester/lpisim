@@ -3,7 +3,7 @@ import { Question } from '../../shared/question.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModusHandlingService } from '../shared/modus-handling.service';
 import { Subscription } from 'rxjs';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'lpi-exam',
@@ -18,18 +18,35 @@ export class ExamComponent implements OnInit, OnDestroy {
   question: Question;
   questionIndex: number;
   numberQuestions: number;
+  skipped: Question[] = [];
+
   dialogVisible: boolean = false;
+  sidebarVisible: boolean = false;
+  items: MenuItem[];
 
   constructor(
     private modusHandler: ModusHandlingService,
     private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService
-  ) {}
+  ) {
+    this.items = [
+      {
+          label: 'Liste zeigen',
+          icon: 'pi pi-refresh',
+          command: () => {
+            this.showSidebar();
+          }
+      }]
+  }
+
+  showSidebar() {
+    this.sidebarVisible = true;
+  }
 
   ngOnInit(): void {
     this.subRoute = this.route.paramMap.subscribe((params) => {
-      this.modusHandler.loadQuestions(params.get('collection'), false, 2);
+      this.modusHandler.loadQuestions(params.get('collection'), false, 100);
     });
     this.subQuestion = this.modusHandler.question$.subscribe((question) => {
       this.question = question;
@@ -55,11 +72,17 @@ export class ExamComponent implements OnInit, OnDestroy {
     this.modusHandler.previousQuestion();
   }
 
+  onSpecificQuestion(index: number) {
+    this.modusHandler.specificQuestion(this.skipped[index].id);
+    this.sidebarVisible = false;
+  }
+
   onExit() {
     console.log('show results');
   }
 
   onSkip() {
+    this.skipped.push(this.question);
     this.modusHandler.addToSkip();
     this.messageService.add({
       key: 'tc',
@@ -71,11 +94,15 @@ export class ExamComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-      this.modusHandler.validate();
+    this.modusHandler.validate();
   }
 
+  // Muss das hier sein? Redundanz zwischen Check und Exam? 
+  // Check & Exam vereinen und Logik in Service?
   handleValidation() {
-    const falseAnswers = this.modusHandler.selectedAnswers.filter((val) => !val.correct).length;
+    const falseAnswers = this.modusHandler.selectedAnswers.filter(
+      (val) => !val.correct
+    ).length;
     if (
       falseAnswers >= this.numberQuestions * 0.2 ||
       this.questionIndex === this.numberQuestions - 1
