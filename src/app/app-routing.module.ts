@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { LearnSingleComponent } from './modus/learn/learn-single/learn-single.component';
 import { TrialComponent } from './modus/trial/trial.component';
 import { ResultComponent } from './modus/shared/result/result.component';
+import { OptionsComponent } from './options/options.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'learn/single/:collection/:id', component: LearnSingleComponent },
   { path: ':modus/result', component: ResultComponent},
   { path: ':modus/:collection', component: TrialComponent},
+  { path: 'options', component: OptionsComponent},
 ];
 
 @NgModule({

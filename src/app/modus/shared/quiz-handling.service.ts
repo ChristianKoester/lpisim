@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { QuestionHandlingService } from './question-handling.service';
 import { Router } from '@angular/router';
-import { Subject, skip } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { QuestionHandlingService } from './question-handling.service';
+import { Question } from '../../shared/question.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ export class QuizHandlingService {
   private _startValidation$: Subject<string> = new Subject<string>();
   startValidation$ = this._startValidation$.asObservable();
 
-  private _validationComplete$: Subject<boolean> = new Subject<boolean>();
-  validationComplete$ = this._validationComplete$.asObservable();
+  private _skipped$: BehaviorSubject<Question[]> = new BehaviorSubject<Question[]>([]);
+  skipped$ = this._skipped$.asObservable();
 
   answerdQuestions: {
     qid: number;
@@ -21,9 +22,8 @@ export class QuizHandlingService {
     answers: string[];
   }[] = [];
 
-  skippedQuestions: number[] = [];
+  private skippedQuestions: Question[] = [];
   private wrongAnswersCount: number = 0;
-  // valid: boolean;
 
 
   constructor(
@@ -34,23 +34,31 @@ export class QuizHandlingService {
 
   initQuiz(type: string) {
     this.quizType = type;
-    this.skippedQuestions = [];
-    this.answerdQuestions = [];
     this.wrongAnswersCount = 0;
+    this.answerdQuestions = [];
+    this.skippedQuestions = [];
+    this._skipped$.next(this.skippedQuestions);
   }
 
-  addToSkip(): number[] {
-    const existIndex = this.skippedQuestions.indexOf(this.qHandler.currentQuestion.id);
+  addToSkip(question: Question) {
+    const existIndex = this.skippedQuestions.indexOf(question);
     if (existIndex === -1) {
-      this.skippedQuestions.push(this.qHandler.currentQuestion.id);
+      this.skippedQuestions.push(question);
     } else {
-      this.skippedQuestions[existIndex] = this.qHandler.currentQuestion.id;
+      this.skippedQuestions[existIndex] = question;
     }
     console.log(this.skippedQuestions);
-    return this.skippedQuestions;
+    this._skipped$.next(this.skippedQuestions);
   }
 
-  addToAnswers(answers: string[], valid?: boolean) {
+  private removeFromSkip() {
+    this.skippedQuestions = this.skippedQuestions.filter(
+      val => val != this.qHandler.currentQuestion
+    )
+    this._skipped$.next(this.skippedQuestions);
+  }
+
+  addToAnswers(answers: string[], valid: boolean) {
     const existIndex = this.answerdQuestions.findIndex(
       (val) => val.qid === this.qHandler.currentQuestion.id
     );
@@ -70,6 +78,9 @@ export class QuizHandlingService {
   }
 
   validate() {
+    if (this.skippedQuestions.includes(this.qHandler.currentQuestion)) {
+      this.removeFromSkip();
+    }
     this._startValidation$.next(this.qHandler.currentQuestion.type);
   }
 

@@ -1,0 +1,15 @@
+<div class="grid mb-2">
+  <div class="col-8 col-offset-2">
+    <p-card>
+      <h3>Check Modus</h3>
+      <p>Zufällige Reihenfolge der Fragen</p><p-inputSwitch [(ngModel)]="shuffleCheck"></p-inputSwitch>
+      <p>Anzahl der Fragen</p>
+      <p-inputNumber inputId="integeronly" [(ngModel)]="qMaxCheck"> </p-inputNumber>
+      <h3>Exam Modus</h3>
+      <p>Zufällige Reihenfolge der Fragen</p><p-inputSwitch [(ngModel)]="shuffleExam"></p-inputSwitch>
+      <p>Anzahl der Fragen</p>
+      <p-inputNumber inputId="integeronly" [(ngModel)]="qMaxExam"> </p-inputNumber>
+      <p-button label="Speichern" (onClick)="onSaveOptions()"></p-button>
+    </p-card>
+  </div>
+</div>

@@ -39,7 +39,6 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
   }
 
   validateAnswer() {
-    console.log(this.selectedAnswer);
     const valid = 
       this.selectedAnswer !== null &&
       !Number.isNaN(this.selectedAnswer) &&

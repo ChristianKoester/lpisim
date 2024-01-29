@@ -20,6 +20,8 @@ import { ToastModule } from 'primeng/toast';
 import { ChartModule } from 'primeng/chart';
 import { SidebarModule } from 'primeng/sidebar';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 //App
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +36,7 @@ import { SingleChoiceComponent } from './modus/shared/single-choice/single-choic
 import { MultiChoiceComponent } from './modus/shared/multi-choice/multi-choice.component';
 import { FillInComponent } from './modus/shared/fill-in/fill-in.component';
 import { ResultComponent } from './modus/shared/result/result.component';
+import { OptionsComponent } from './options/options.component';
 
 
 @NgModule({
@@ -48,6 +51,7 @@ import { ResultComponent } from './modus/shared/result/result.component';
     MultiChoiceComponent,
     FillInComponent,
     ResultComponent,
+    OptionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +75,8 @@ import { ResultComponent } from './modus/shared/result/result.component';
     ChartModule,
     SidebarModule,
     SplitButtonModule,
+    InputSwitchModule,
+    InputNumberModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

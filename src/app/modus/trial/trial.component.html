@@ -109,12 +109,12 @@
 
 <p-sidebar [(visible)]="sidebarVisible">
   <h3>Übersprungene Fragen</h3>
-  <div *ngFor="let qId of skipped; index as i">
+  <div *ngFor="let qId of skipped$ | async; index as i">
     <p-button 
       [text]="true" 
       severity="info"
-      (click)="onSpecificQuestion(i)"> 
-      Frage {{ qId }}
+      (click)="onSpecificQuestion(qId.id)"> 
+      Frage {{ qId.id }}
     </p-button>
   </div>
 </p-sidebar>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionHandlingService } from '../question-handling.service';
 import { QuizHandlingService } from '../quiz-handling.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'lpi-result',
@@ -21,19 +22,15 @@ export class ResultComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.skippedAnswers = this.quizHandler.skippedQuestions.length;
+    this.quizHandler.skipped$.subscribe(
+      (skipped => this.skippedAnswers = skipped.length)
+    ).unsubscribe();
     this.correctAnswers = this.quizHandler.answerdQuestions.reduce(
       (acc, val) => (val.correct ? acc + 1 : acc), 0 
     );
     this.falseAnswers = this.quizHandler.answerdQuestions.reduce(
       (acc, val) => (!val.correct ? acc + 1 : acc ), 0
     )
-    // this.correctAnswers = this.modusHandler.selectedAnswers.filter(
-    //   (val) => val.correct
-    // ).length;
-    // this.falseAnswers = this.modusHandler.selectedAnswers.filter(
-    //   (val) => !val.correct
-    // ).length;
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -42,16 +39,18 @@ export class ResultComponent implements OnInit {
       labels: ['Korrekt', 'Übersprungen', 'Falsch'],
       datasets: [
         {
-          data: [this.correctAnswers, this.skippedAnswers, this.falseAnswers],
+          data: [this.correctAnswers, this.skippedAnswers, this.falseAnswers, 0.0001],
           backgroundColor: [
             documentStyle.getPropertyValue('--green-500'),
             documentStyle.getPropertyValue('--yellow-500'),
             documentStyle.getPropertyValue('--red-500'),
+            documentStyle.getPropertyValue('--gray-300'),
           ],
           hoverBackgroundColor: [
             documentStyle.getPropertyValue('--green-400'),
             documentStyle.getPropertyValue('--yellow-400'),
             documentStyle.getPropertyValue('--red-400'),
+            documentStyle.getPropertyValue('--gray-200'),
           ],
         },
       ],

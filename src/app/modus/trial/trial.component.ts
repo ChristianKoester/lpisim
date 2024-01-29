@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Question } from '../../shared/question.model';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionHandlingService } from '../shared/question-handling.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MenuItem, MessageService } from 'primeng/api';
 import { QuizHandlingService } from '../shared/quiz-handling.service';
 
@@ -19,7 +19,7 @@ export class TrialComponent implements OnInit, OnDestroy {
   question: Question;
   questionIndex: number;
   numberQuestions: number;
-  skipped: number[] = [];
+  skipped$: Observable<Question[]>;
 
   dialogVisible: boolean = false;
   sidebarVisible: boolean = false;
@@ -52,6 +52,7 @@ export class TrialComponent implements OnInit, OnDestroy {
       this.questionIndex = this.qHandler.currentIndex;
       this.numberQuestions = this.qHandler.questions.length;
     });
+    this.skipped$ = this.quizHandler.skipped$;
   }
 
   ngOnDestroy(): void {
@@ -68,7 +69,7 @@ export class TrialComponent implements OnInit, OnDestroy {
   }
 
   onSpecificQuestion(index: number) {
-    this.qHandler.specificQuestion(this.skipped[index]);
+    this.qHandler.specificQuestion(index);
     this.sidebarVisible = false;
   }
 
@@ -77,7 +78,7 @@ export class TrialComponent implements OnInit, OnDestroy {
   }
 
   onSkip() {
-    this.skipped = this.quizHandler.addToSkip();
+    this.quizHandler.addToSkip(this.question);
     this.messageService.add({
       key: 'tc',
       severity: 'info',

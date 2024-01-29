@@ -12,9 +12,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Home',
+        label: 'Start',
+        routerLink: 'home',
         icon: "pi pi-fw pi-home",
-        routerLink: 'home'
       },
       {
         label: 'LPIC 101',
@@ -80,6 +80,11 @@ export class HeaderComponent implements OnInit {
           },
         ],
       },
+      {
+        label: 'Einstellungen',
+        routerLink: 'options',
+        icon: 'pi pi-fw pi-cog',
+      }
     ];
   }
 }
