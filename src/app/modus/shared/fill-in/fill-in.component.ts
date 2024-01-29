@@ -41,13 +41,9 @@ export class FillInComponent implements OnInit, OnDestroy {
   }
 
   validateAnswer() {
-    if (this.givenAnswer === this.question.choices[0].answer) {
-      this.quizHandler.valid = true;
-    } else {
-      this.quizHandler.valid = false;
-    }
+    const valid = this.givenAnswer === this.question.choices[0].answer
 
-    this.quizHandler.addToAnswers([this.givenAnswer]);
-    this.quizHandler.validationComplete();
+    this.quizHandler.addToAnswers([this.givenAnswer], valid);
+    this.quizHandler.handleValidation(valid);
   }
 }

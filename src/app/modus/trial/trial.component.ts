@@ -7,16 +7,15 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { QuizHandlingService } from '../shared/quiz-handling.service';
 
 @Component({
-  selector: 'lpi-exam',
-  templateUrl: './exam.component.html',
-  styleUrl: './exam.component.css',
+  selector: 'lpi-trial',
+  templateUrl: './trial.component.html',
+  styleUrl: './trial.component.css',
   providers: [MessageService],
 })
-export class ExamComponent implements OnInit, OnDestroy {
+export class TrialComponent implements OnInit, OnDestroy {
   private subRoute: Subscription;
   private subQuestion: Subscription;
   quizType = '';
-  // private subValidation: Subscription;
   question: Question;
   questionIndex: number;
   numberQuestions: number;
@@ -30,7 +29,6 @@ export class ExamComponent implements OnInit, OnDestroy {
     private qHandler: QuestionHandlingService,
     private quizHandler: QuizHandlingService,
     private route: ActivatedRoute,
-    // private router: Router,
     private messageService: MessageService
   ) {
     this.items = [
@@ -46,6 +44,7 @@ export class ExamComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subRoute = this.route.paramMap.subscribe((params) => {
       this.quizType = params.get('modus');
+      this.quizHandler.initQuiz(this.quizType);
       this.qHandler.loadQuestions(params.get('collection'), false, 100);
     });
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
@@ -53,15 +52,11 @@ export class ExamComponent implements OnInit, OnDestroy {
       this.questionIndex = this.qHandler.currentIndex;
       this.numberQuestions = this.qHandler.questions.length;
     });
-    // this.subValidation = this.qHandler.validationComplete$.subscribe(() =>
-    //   this.handleValidation()
-    // );
   }
 
   ngOnDestroy(): void {
     this.subRoute.unsubscribe();
     this.subQuestion.unsubscribe();
-    // this.subValidation.unsubscribe();
   }
 
   onNextQuestion() {
@@ -95,22 +90,6 @@ export class ExamComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.quizHandler.validate();
   }
-
-  // Muss das hier sein? Redundanz zwischen Check und Exam? 
-  // Check & Exam vereinen und Logik in Service?
-  // handleValidation() {
-  //   const falseAnswers = this.qHandler.answerdQuestions.filter(
-  //     (val) => !val.correct
-  //   ).length;
-  //   if (
-  //     falseAnswers >= this.numberQuestions * 0.2 ||
-  //     this.questionIndex === this.numberQuestions - 1
-  //   ) {
-  //     this.router.navigateByUrl('/exam/result');
-  //   } else {
-  //     this.qHandler.nextQuestion();
-  //   }
-  // }
 
   private showSidebar() {
     this.sidebarVisible = true;

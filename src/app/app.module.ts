@@ -29,7 +29,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LearnListComponent } from './modus/learn/learn-list/learn-list.component';
 import { LearnSingleComponent } from './modus/learn/learn-single/learn-single.component';
-import { ExamComponent } from './modus/exam/exam.component';
+import { TrialComponent } from './modus/trial/trial.component';
 import { SingleChoiceComponent } from './modus/shared/single-choice/single-choice.component';
 import { MultiChoiceComponent } from './modus/shared/multi-choice/multi-choice.component';
 import { FillInComponent } from './modus/shared/fill-in/fill-in.component';
@@ -43,7 +43,7 @@ import { ResultComponent } from './modus/shared/result/result.component';
     HomeComponent,
     HeaderComponent,
     LearnSingleComponent,
-    ExamComponent,
+    TrialComponent,
     SingleChoiceComponent,
     MultiChoiceComponent,
     FillInComponent,

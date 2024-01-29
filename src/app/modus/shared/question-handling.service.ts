@@ -10,24 +10,9 @@ export class QuestionHandlingService {
   private _question$: ReplaySubject<Question> = new ReplaySubject<Question>(1);
   question$ = this._question$.asObservable();
 
-  // private _startValidation$: Subject<string> = new Subject<string>();
-  // startValidation$ = this._startValidation$.asObservable();
-
-  // private _validationComplete$: Subject<boolean> = new Subject<boolean>();
-  // validationComplete$ = this._validationComplete$.asObservable();
-
-  // answerdQuestions: {
-  //   qid: number;
-  //   correct: boolean;
-  //   answers: string[];
-  // }[] = [];
-
-  // skippedQuestions: number[] = [];
-
   questions: Question[];
   currentQuestion: Question;
   currentIndex: number;
-  // valid: boolean;
 
   constructor(private qServ: QuestionService) {}
 
@@ -43,8 +28,6 @@ export class QuestionHandlingService {
         }
       }
       this.currentIndex = 0;
-      // this.answerdQuestions = [];
-      // this.skippedQuestions = [];
       this.currentQuestion = questions[this.currentIndex];
       this._question$.next(this.currentQuestion);
     });
@@ -75,44 +58,6 @@ export class QuestionHandlingService {
     this.currentIndex = index;
     this._question$.next(this.currentQuestion);
   }
-
-  // validate() {
-  //   this._startValidation$.next(this.currentQuestion.type);
-  // }
-
-  // validationComplete() {
-  //   this._validationComplete$.next(true);
-  // }
-
-  // addToSkip(): number[] {
-  //   const existIndex = this.skippedQuestions.indexOf(this.currentQuestion.id);
-  //   if (existIndex === -1) {
-  //     this.skippedQuestions.push(this.currentQuestion.id);
-  //   } else {
-  //     this.skippedQuestions[existIndex] = this.currentQuestion.id;
-  //   }
-  //   console.log(this.skippedQuestions);
-  //   return this.skippedQuestions;
-  // }
-
-  // addToAnswers(answers: string[]) {
-  //   const existIndex = this.answerdQuestions.findIndex(
-  //     (val) => val.qid === this.currentQuestion.id
-  //   );
-  //   if (existIndex === -1) {
-  //     this.answerdQuestions.push({
-  //       qid: this.currentQuestion.id,
-  //       correct: this.valid,
-  //       answers: answers,
-  //     });
-  //   } else {
-  //     this.answerdQuestions[existIndex] = {
-  //       qid: this.currentQuestion.id,
-  //       correct: this.valid,
-  //       answers: answers,
-  //     };
-  //   }
-  // }
 
   private shuffleQuestions() {
     let currentIndex = this.questions.length;

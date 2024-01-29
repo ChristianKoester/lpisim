@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LearnListComponent } from './modus/learn/learn-list/learn-list.component';
 import { HomeComponent } from './home/home.component';
 import { LearnSingleComponent } from './modus/learn/learn-single/learn-single.component';
-import { ExamComponent } from './modus/exam/exam.component';
+import { TrialComponent } from './modus/trial/trial.component';
 import { ResultComponent } from './modus/shared/result/result.component';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'learn/single/:collection', redirectTo: 'learn/single/:collection/1', pathMatch: 'full' },
   { path: 'learn/single/:collection/:id', component: LearnSingleComponent },
   { path: ':modus/result', component: ResultComponent},
-  { path: ':modus/:collection', component: ExamComponent},
+  { path: ':modus/:collection', component: TrialComponent},
 ];
 
 @NgModule({

@@ -49,12 +49,7 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (valid) {
-      this.quizHandler.valid = true;
-    } else {
-      this.quizHandler.valid = false;
-    }
-    this.quizHandler.addToAnswers(this.selectedAnswers.map(value => value.toString()));
-    this.quizHandler.validationComplete();
+    this.quizHandler.addToAnswers(this.selectedAnswers.map(value => value.toString()), valid);
+    this.quizHandler.handleValidation(valid);
   }
 }
