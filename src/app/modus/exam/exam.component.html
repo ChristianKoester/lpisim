@@ -1,3 +1,4 @@
+<p>{{ quizType }}</p>
 <div class="grid mb-2">
   <div class="col-8 col-offset-2" *ngIf="question">
     <p-fieldset legend="Frage {{ questionIndex + 1 }} / {{ numberQuestions }}">
@@ -108,8 +109,13 @@
 
 <p-sidebar [(visible)]="sidebarVisible">
   <h3>Übersprungene Fragen</h3>
-  <div *ngFor="let skipQ of skipped; index as i">
-    <p-button (click)="onSpecificQuestion(i)"> Frage {{ skipQ.id }} </p-button>
+  <div *ngFor="let qId of skipped; index as i">
+    <p-button 
+      [text]="true" 
+      severity="info"
+      (click)="onSpecificQuestion(i)"> 
+      Frage {{ qId }}
+    </p-button>
   </div>
 </p-sidebar>
 <!-- <p-button (click)="sidebarVisible = true" icon="pi pi-arrow-right"></p-button> -->

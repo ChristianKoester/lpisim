@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModusHandlingService } from '../modus-handling.service';
+import { QuestionHandlingService } from '../question-handling.service';
+import { QuizHandlingService } from '../quiz-handling.service';
 
 @Component({
   selector: 'lpi-result',
@@ -14,14 +15,17 @@ export class ResultComponent implements OnInit {
   falseAnswers: number = 0;
   skippedAnswers: number = 0;
 
-  constructor(private modusHandler: ModusHandlingService) {}
+  constructor(
+    private qHandler: QuestionHandlingService,
+    private quizHandler: QuizHandlingService,
+  ) {}
 
   ngOnInit(): void {
-    this.skippedAnswers = this.modusHandler.skippedQuestions.length;
-    this.correctAnswers = this.modusHandler.selectedAnswers.reduce(
+    this.skippedAnswers = this.quizHandler.skippedQuestions.length;
+    this.correctAnswers = this.quizHandler.answerdQuestions.reduce(
       (acc, val) => (val.correct ? acc + 1 : acc), 0 
     );
-    this.falseAnswers = this.modusHandler.selectedAnswers.reduce(
+    this.falseAnswers = this.quizHandler.answerdQuestions.reduce(
       (acc, val) => (!val.correct ? acc + 1 : acc ), 0
     )
     // this.correctAnswers = this.modusHandler.selectedAnswers.filter(

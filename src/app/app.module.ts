@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { InMemoryDataService } from './shared/in-memory-data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
@@ -25,11 +24,11 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 //App
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { InMemoryDataService } from './shared/in-memory-data.service';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LearnListComponent } from './modus/learn/learn-list/learn-list.component';
 import { LearnSingleComponent } from './modus/learn/learn-single/learn-single.component';
-import { CheckComponent } from './modus/check/check.component';
 import { ExamComponent } from './modus/exam/exam.component';
 import { SingleChoiceComponent } from './modus/shared/single-choice/single-choice.component';
 import { MultiChoiceComponent } from './modus/shared/multi-choice/multi-choice.component';
@@ -44,7 +43,6 @@ import { ResultComponent } from './modus/shared/result/result.component';
     HomeComponent,
     HeaderComponent,
     LearnSingleComponent,
-    CheckComponent,
     ExamComponent,
     SingleChoiceComponent,
     MultiChoiceComponent,

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LearnListComponent } from './modus/learn/learn-list/learn-list.component';
 import { HomeComponent } from './home/home.component';
 import { LearnSingleComponent } from './modus/learn/learn-single/learn-single.component';
-import { CheckComponent } from './modus/check/check.component';
 import { ExamComponent } from './modus/exam/exam.component';
 import { ResultComponent } from './modus/shared/result/result.component';
 
@@ -13,10 +12,8 @@ const routes: Routes = [
   { path: 'learn/list/:collection', component: LearnListComponent },
   { path: 'learn/single/:collection', redirectTo: 'learn/single/:collection/1', pathMatch: 'full' },
   { path: 'learn/single/:collection/:id', component: LearnSingleComponent },
-  { path: 'check/result', component: ResultComponent},
-  { path: 'check/:collection', component: CheckComponent},
-  { path: 'exam/result', component: ResultComponent},
-  { path: 'exam/:collection', component: ExamComponent},
+  { path: ':modus/result', component: ResultComponent},
+  { path: ':modus/:collection', component: ExamComponent},
 ];
 
 @NgModule({

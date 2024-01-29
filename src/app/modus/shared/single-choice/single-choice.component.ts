@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Question } from '../../../shared/question.model';
-import { ModusHandlingService } from '../modus-handling.service';
+import { QuestionHandlingService } from '../question-handling.service';
 import { Subscription } from 'rxjs';
+import { QuizHandlingService } from '../quiz-handling.service';
 
 @Component({
   selector: 'lpi-single-choice',
@@ -14,17 +15,20 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
   question: Question;
   selectedAnswer: number;
 
-  constructor(private modusHandler: ModusHandlingService) {}
+  constructor(
+    private qHandler: QuestionHandlingService,
+    private quizHandler: QuizHandlingService,
+  ) {}
   
   ngOnInit(): void {
-    this.subQuestion = this.modusHandler.question$.subscribe((question) => {
+    this.subQuestion = this.qHandler.question$.subscribe((question) => {
       if (question.type === 'single') {
         this.question = question;
-        const answeredIndex = this.modusHandler.selectedAnswers.findIndex(val => val.qid === question.id);
-        this.selectedAnswer = answeredIndex !== -1 ? +this.modusHandler.selectedAnswers[answeredIndex].answers[0] : null;
+        const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.qid === question.id);
+        this.selectedAnswer = answeredIndex !== -1 ? +this.quizHandler.answerdQuestions[answeredIndex].answers[0] : null;
       }
     });
-    this.subValidation = this.modusHandler.startValidation$.subscribe((type) => {
+    this.subValidation = this.quizHandler.startValidation$.subscribe((type) => {
       if (type === 'single') this.validateAnswer();
     });   
   }
@@ -39,12 +43,12 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
       this.selectedAnswer !== null &&
       this.question.choices[this.selectedAnswer].correct
     ) {
-      this.modusHandler.valid = true;
+      this.quizHandler.valid = true;
     } else {
-      this.modusHandler.valid = false;
+      this.quizHandler.valid = false;
     }
 
-    this.modusHandler.addToAnswers([this.selectedAnswer?.toString()]);
-    this.modusHandler.validationComplete();
+    this.quizHandler.addToAnswers([this.selectedAnswer?.toString()]);
+    this.quizHandler.validationComplete();
   }
 }

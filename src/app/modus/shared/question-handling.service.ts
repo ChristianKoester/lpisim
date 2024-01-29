@@ -1,33 +1,33 @@
 import { Injectable } from '@angular/core';
 import { QuestionService } from '../../shared/question.service';
 import { Question } from '../../shared/question.model';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ModusHandlingService {
+export class QuestionHandlingService {
   private _question$: ReplaySubject<Question> = new ReplaySubject<Question>(1);
   question$ = this._question$.asObservable();
 
-  private _startValidation$: Subject<string> = new Subject<string>();
-  startValidation$ = this._startValidation$.asObservable();
+  // private _startValidation$: Subject<string> = new Subject<string>();
+  // startValidation$ = this._startValidation$.asObservable();
 
-  private _validationComplete$: Subject<boolean> = new Subject<boolean>();
-  validationComplete$ = this._validationComplete$.asObservable();
+  // private _validationComplete$: Subject<boolean> = new Subject<boolean>();
+  // validationComplete$ = this._validationComplete$.asObservable();
 
-  selectedAnswers: {
-    qid: number;
-    correct: boolean;
-    answers: string[];
-  }[] = [];
+  // answerdQuestions: {
+  //   qid: number;
+  //   correct: boolean;
+  //   answers: string[];
+  // }[] = [];
 
-  skippedQuestions: number[] = [];
+  // skippedQuestions: number[] = [];
 
   questions: Question[];
   currentQuestion: Question;
   currentIndex: number;
-  valid: boolean;
+  // valid: boolean;
 
   constructor(private qServ: QuestionService) {}
 
@@ -43,8 +43,8 @@ export class ModusHandlingService {
         }
       }
       this.currentIndex = 0;
-      this.selectedAnswers = [];
-      this.skippedQuestions = [];
+      // this.answerdQuestions = [];
+      // this.skippedQuestions = [];
       this.currentQuestion = questions[this.currentIndex];
       this._question$.next(this.currentQuestion);
     });
@@ -76,43 +76,43 @@ export class ModusHandlingService {
     this._question$.next(this.currentQuestion);
   }
 
-  validate() {
-    this._startValidation$.next(this.currentQuestion.type);
-  }
+  // validate() {
+  //   this._startValidation$.next(this.currentQuestion.type);
+  // }
 
-  validationComplete() {
-    this._validationComplete$.next(true);
-  }
+  // validationComplete() {
+  //   this._validationComplete$.next(true);
+  // }
 
-  addToSkip() {
-    const existIndex = this.skippedQuestions.indexOf(this.currentQuestion.id);
-    if (existIndex === -1) {
-      this.skippedQuestions.push(this.currentQuestion.id);
-    } else {
-      this.skippedQuestions[existIndex] = this.currentQuestion.id;
-    }
-    console.log(this.skippedQuestions);
-  }
+  // addToSkip(): number[] {
+  //   const existIndex = this.skippedQuestions.indexOf(this.currentQuestion.id);
+  //   if (existIndex === -1) {
+  //     this.skippedQuestions.push(this.currentQuestion.id);
+  //   } else {
+  //     this.skippedQuestions[existIndex] = this.currentQuestion.id;
+  //   }
+  //   console.log(this.skippedQuestions);
+  //   return this.skippedQuestions;
+  // }
 
-  addToAnswers(answers: string[]) {
-    const existIndex = this.selectedAnswers.findIndex(
-      (val) => val.qid === this.currentQuestion.id
-    );
-    if (existIndex === -1) {
-      this.selectedAnswers.push({
-        qid: this.currentQuestion.id,
-        correct: this.valid,
-        answers: answers,
-      });
-    } else {
-      this.selectedAnswers[existIndex] = {
-        qid: this.currentQuestion.id,
-        correct: this.valid,
-        answers: answers,
-      };
-    }
-    console.log(this.selectedAnswers);
-  }
+  // addToAnswers(answers: string[]) {
+  //   const existIndex = this.answerdQuestions.findIndex(
+  //     (val) => val.qid === this.currentQuestion.id
+  //   );
+  //   if (existIndex === -1) {
+  //     this.answerdQuestions.push({
+  //       qid: this.currentQuestion.id,
+  //       correct: this.valid,
+  //       answers: answers,
+  //     });
+  //   } else {
+  //     this.answerdQuestions[existIndex] = {
+  //       qid: this.currentQuestion.id,
+  //       correct: this.valid,
+  //       answers: answers,
+  //     };
+  //   }
+  // }
 
   private shuffleQuestions() {
     let currentIndex = this.questions.length;

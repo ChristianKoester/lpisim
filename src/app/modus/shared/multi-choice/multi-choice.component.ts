@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Question } from '../../../shared/question.model';
-import { ModusHandlingService } from '../modus-handling.service';
+import { QuestionHandlingService } from '../question-handling.service';
 import { Subscription } from 'rxjs';
+import { QuizHandlingService } from '../quiz-handling.service';
 
 @Component({
   selector: 'lpi-multi-choice',
@@ -14,18 +15,21 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
   question: Question;
   selectedAnswers: number[] = [];
 
-  constructor(private modusHandler: ModusHandlingService) {}
+  constructor(
+    private qHandler: QuestionHandlingService,
+    private quizHandler: QuizHandlingService,
+  ) {}
   
   ngOnInit(): void {
-    this.subQuestion = this.modusHandler.question$.subscribe((question) => {
+    this.subQuestion = this.qHandler.question$.subscribe((question) => {
       if (question.type === 'multi') {
         this.question = question;
-        const answeredIndex = this.modusHandler.selectedAnswers.findIndex(val => val.qid === question.id);
+        const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.qid === question.id);
         this.selectedAnswers = [];
-        this.modusHandler.selectedAnswers[answeredIndex]?.answers.map((answer => this.selectedAnswers.push(+answer)));
+        this.quizHandler.answerdQuestions[answeredIndex]?.answers.map((answer => this.selectedAnswers.push(+answer)));
       }
     });
-    this.subValidaton = this.modusHandler.startValidation$.subscribe((type) => {
+    this.subValidaton = this.quizHandler.startValidation$.subscribe((type) => {
       if (type === 'multi') this.validateAnswer();
     });
   }
@@ -46,11 +50,11 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
     }
 
     if (valid) {
-      this.modusHandler.valid = true;
+      this.quizHandler.valid = true;
     } else {
-      this.modusHandler.valid = false;
+      this.quizHandler.valid = false;
     }
-    this.modusHandler.addToAnswers(this.selectedAnswers.map(value => value.toString()));
-    this.modusHandler.validationComplete();
+    this.quizHandler.addToAnswers(this.selectedAnswers.map(value => value.toString()));
+    this.quizHandler.validationComplete();
   }
 }

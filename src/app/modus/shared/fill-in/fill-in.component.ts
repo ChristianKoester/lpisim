@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Question } from '../../../shared/question.model';
-import { ModusHandlingService } from '../modus-handling.service';
+import { QuestionHandlingService } from '../question-handling.service';
 import { Subscription } from 'rxjs';
+import { QuizHandlingService } from '../quiz-handling.service';
 
 @Component({
   selector: 'lpi-fill-in',
@@ -14,19 +15,22 @@ export class FillInComponent implements OnInit, OnDestroy {
   question: Question;
   givenAnswer: string = '';
 
-  constructor(private modusHandler: ModusHandlingService) {}
+  constructor(
+    private qHandler: QuestionHandlingService,
+    private quizHandler: QuizHandlingService,
+  ) {}
   
   ngOnInit(): void {
-    this.subQuestion = this.modusHandler.question$.subscribe((question) => {
+    this.subQuestion = this.qHandler.question$.subscribe((question) => {
       if (question.type === 'fill') {
         this.question = question;
-        const answeredIndex = this.modusHandler.selectedAnswers.findIndex(val => val.qid === question.id);
+        const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.qid === question.id);
         this.givenAnswer = '';
         if (answeredIndex !== -1)
-          this.givenAnswer += this.modusHandler.selectedAnswers[answeredIndex].answers[0];
+          this.givenAnswer += this.quizHandler.answerdQuestions[answeredIndex].answers[0];
       }
     });
-    this.subValidaton = this.modusHandler.startValidation$.subscribe((type) => {
+    this.subValidaton = this.quizHandler.startValidation$.subscribe((type) => {
       if (type === 'fill') this.validateAnswer();
     });
   }
@@ -38,12 +42,12 @@ export class FillInComponent implements OnInit, OnDestroy {
 
   validateAnswer() {
     if (this.givenAnswer === this.question.choices[0].answer) {
-      this.modusHandler.valid = true;
+      this.quizHandler.valid = true;
     } else {
-      this.modusHandler.valid = false;
+      this.quizHandler.valid = false;
     }
 
-    this.modusHandler.addToAnswers([this.givenAnswer]);
-    this.modusHandler.validationComplete();
+    this.quizHandler.addToAnswers([this.givenAnswer]);
+    this.quizHandler.validationComplete();
   }
 }
