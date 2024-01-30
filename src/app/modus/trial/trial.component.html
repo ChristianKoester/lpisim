@@ -49,7 +49,7 @@
             severity="secondary"
             icon="pi pi-caret-right"
             iconPos="right"
-            [disabled]="questionIndex >= numberQuestions - 1"
+            [disabled]="questionIndex >= maxQuestSeen"
             (click)="onNextQuestion()"
           ></p-button>
           <p-button
@@ -127,7 +127,7 @@
       [text]="true" 
       severity="info"
       (click)="onSpecificQuestion(qId.id)"> 
-      Frage {{ qId.id }}
+      Frage {{ i + 1 }}
     </p-button>
   </div>
 </p-sidebar>

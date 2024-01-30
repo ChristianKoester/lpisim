@@ -23,6 +23,7 @@ export class TrialComponent implements OnInit, OnDestroy {
   numberQuestions: number;
   skipped$: Observable<Question[]>;
   errorMsg: ErrorMsg = {header:"",body: "", critical: false};
+  maxQuestSeen: number = 0;
 
   dialogVisible: boolean = false;
   sidebarVisible: boolean = false;
@@ -45,6 +46,7 @@ export class TrialComponent implements OnInit, OnDestroy {
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
       this.question = question;
       this.questionIndex = this.qHandler.currentIndex;
+      this.maxQuestSeen = Math.max(this.questionIndex, this.maxQuestSeen);
       this.numberQuestions = this.qHandler.questions.length;
     });
     this.skipped$ = this.quizHandler.skipped$;

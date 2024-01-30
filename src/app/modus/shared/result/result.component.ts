@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionHandlingService } from '../question-handling.service';
 import { QuizHandlingService } from '../quiz-handling.service';
-import { AnsweredQuestion, Question } from '../../../shared/question.model';
+import { AnsweredQuestion } from '../../../shared/question.model';
 
 @Component({
   selector: 'lpi-result',
@@ -18,6 +17,7 @@ export class ResultComponent implements OnInit {
   correctAnswers: number = 0;
   falseAnswers: number = 0;
   skippedAnswers: number = 0;
+  untouchedQuestions: number = 0.0001;
 
   constructor(
     private quizHandler: QuizHandlingService,
@@ -43,7 +43,7 @@ export class ResultComponent implements OnInit {
       labels: ['Korrekt', 'Übersprungen', 'Falsch'],
       datasets: [
         {
-          data: [this.correctAnswers, this.skippedAnswers, this.falseAnswers, 0.0001],
+          data: [this.correctAnswers, this.skippedAnswers, this.falseAnswers, this.untouchedQuestions],
           backgroundColor: [
             documentStyle.getPropertyValue('--green-500'),
             documentStyle.getPropertyValue('--yellow-500'),
