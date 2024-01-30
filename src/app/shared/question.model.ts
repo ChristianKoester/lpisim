@@ -3,10 +3,15 @@ export interface Question {
   collection: string,
   type: string,
   question: string,
-  choices: {
+  answers: {
     answer: string, 
     correct: boolean,
+    chosen?: boolean,
   }[]
+  givenAnswer?: string,
+  answered?: boolean,
+  skipped?: boolean,
+  correct?: boolean,
 }
 
 export interface AnsweredQuestion {

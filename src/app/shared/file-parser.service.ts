@@ -80,7 +80,7 @@ export class FileParserService {
           collection: collection,
           type: type,
           question: question,
-          choices: choices,
+          answers: choices,
         };
 
         // Add question to list

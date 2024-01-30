@@ -42,7 +42,7 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
     const valid = 
       this.selectedAnswer !== null &&
       !Number.isNaN(this.selectedAnswer) &&
-      this.question.choices[this.selectedAnswer].correct
+      this.question.answers[this.selectedAnswer].correct
 
     this.quizHandler.addToAnswers([this.selectedAnswer?.toString()], valid);
     this.quizHandler.handleValidation(valid);

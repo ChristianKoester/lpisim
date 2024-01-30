@@ -41,8 +41,8 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
 
   validateAnswer() {
     let valid: boolean = true;
-    for (let i = 0; i < this.question.choices.length; i++) {
-      if (this.question.choices[i].correct) {
+    for (let i = 0; i < this.question.answers.length; i++) {
+      if (this.question.answers[i].correct) {
         if (!this.selectedAnswers.includes(i)) valid = false;
       } else {
         if (this.selectedAnswers.includes(i)) valid = false;

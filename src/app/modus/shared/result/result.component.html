@@ -24,7 +24,7 @@
           <p>Frage {{ q.question.id }}</p>
           <p>{{ q.question.question }}</p>
           <ul>
-            <li *ngFor="let item of q.question.choices" [ngClass]="{'bg-green-200': item.correct}">
+            <li *ngFor="let item of q.question.answers" [ngClass]="{'bg-green-200': item.correct}">
               {{ item.answer }}
             </li>
           </ul>

@@ -1,6 +1,6 @@
 <p style="white-space: pre-line">{{ question.question }}</p>
 <div class="flex flex-column gap-2">
-  <div *ngFor="let answer of question.choices; index as i" class="field-checkbox">
+  <div *ngFor="let answer of question.answers; index as i" class="field-checkbox">
   <p-checkbox [label]="answer.answer" name="group" [value]="i" [(ngModel)]="selectedAnswers"></p-checkbox>
   </div>
 </div>

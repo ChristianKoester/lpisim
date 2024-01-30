@@ -41,7 +41,7 @@ export class FillInComponent implements OnInit, OnDestroy {
   }
 
   validateAnswer() {
-    const valid = this.givenAnswer === this.question.choices[0].answer
+    const valid = this.givenAnswer === this.question.answers[0].answer
 
     this.quizHandler.addToAnswers([this.givenAnswer], valid);
     this.quizHandler.handleValidation(valid);

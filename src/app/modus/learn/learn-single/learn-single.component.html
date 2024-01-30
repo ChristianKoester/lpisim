@@ -8,11 +8,11 @@
           pInputText
           type="text"
           disabled
-          value="{{ showSolution ? q.choices[0].answer : '' }}"
+          value="{{ showSolution ? q.answers[0].answer : '' }}"
         />
       </ng-container>
       <ng-template #elseTypeTempl>
-        <div *ngFor="let a of q.choices">
+        <div *ngFor="let a of q.answers">
           <p 
             class="card-text p-2 border-1 border-round border-gray-200 overflow-hidden" 
             [ngClass]="{'bg-green-200': a.correct  && showSolution}">
