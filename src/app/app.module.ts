@@ -6,22 +6,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 //PrimeNG
-import { MenubarModule } from 'primeng/menubar';
-import { CardModule } from 'primeng/card';
-import { FieldsetModule } from 'primeng/fieldset';
-import { InputTextModule } from 'primeng/inputtext';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
-import { RadioButtonModule } from 'primeng/radiobutton';
+import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
-import { ToastModule } from 'primeng/toast';
-import { ChartModule } from 'primeng/chart';
-import { SidebarModule } from 'primeng/sidebar';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { FieldsetModule } from 'primeng/fieldset';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextModule } from 'primeng/inputtext';
+import { MenubarModule } from 'primeng/menubar';
+import { PanelModule } from 'primeng/panel';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RippleModule } from 'primeng/ripple';
+import { SidebarModule } from 'primeng/sidebar';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
 
 //App
 import { AppRoutingModule } from './app-routing.module';
@@ -74,9 +75,10 @@ import { OptionsComponent } from './options/options.component';
     ToastModule,
     ChartModule,
     SidebarModule,
-    SplitButtonModule,
     InputSwitchModule,
     InputNumberModule,
+    ToolbarModule,
+    PanelModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

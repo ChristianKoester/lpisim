@@ -19,7 +19,22 @@
           </div>
         </div>
       </div>
-      <p-button label="Home" routerLink="/home"></p-button>
+      <ng-container *ngIf="showAnswers">
+        <div *ngFor="let q of answeredQuestions">
+          <p>Frage {{ q.question.id }}</p>
+          <p>{{ q.question.question }}</p>
+          <ul>
+            <li *ngFor="let item of q.question.choices" [ngClass]="{'bg-green-200': item.correct}">
+              {{ item.answer }}
+            </li>
+          </ul>
+          <hr>
+        </div>
+      </ng-container>
+      <p-toolbar>
+          <p-button label="Schließen" routerLink="/home"></p-button>
+          <p-button label="Antworten zeigen" (onClick)="showAnswers = true"></p-button>
+      </p-toolbar>
     </p-fieldset>
   </div>
 </div>

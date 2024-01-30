@@ -8,3 +8,9 @@ export interface Question {
     correct: boolean,
   }[]
 }
+
+export interface AnsweredQuestion {
+  question: Question,
+  correct: boolean,
+  answers: string[],
+}

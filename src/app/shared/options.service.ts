@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OptionsService {
+export class OptionsService implements OnInit {
   options = {
     shuffleCheck: false,
     shuffleExam: false,
@@ -12,7 +12,13 @@ export class OptionsService {
     qMaxExam: 0,
   };
 
-  constructor(private localStorage: LocalStorageService) {}
+  constructor(private localStorage: LocalStorageService) {
+    this.loadOptions();
+  }
+
+  ngOnInit(): void {
+    
+  }
 
   loadOptions(): void {
     const loadedItem = this.localStorage.getData('options');

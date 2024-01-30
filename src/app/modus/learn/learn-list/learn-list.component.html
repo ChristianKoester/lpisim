@@ -14,7 +14,7 @@
         <ng-template #elseTypeTempl>
           <div *ngFor="let a of q.choices">
             <p 
-              class="card-text p-2 border-1 border-round overflow-hidden"
+              class="card-text p-2 border-1 border-round border-gray-200 overflow-hidden"
               [ngClass]="{'bg-green-200': a.correct}">
               {{ a.answer }}
             </p>

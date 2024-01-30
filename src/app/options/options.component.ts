@@ -1,5 +1,5 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { OptionsService } from '../shared/option.service';
+import { Component, OnInit } from '@angular/core';
+import { OptionsService } from '../shared/options.service';
 
 @Component({
   selector: 'lpi-options',

@@ -17,69 +17,70 @@ export class HeaderComponent implements OnInit {
         icon: "pi pi-fw pi-home",
       },
       {
-        label: 'LPIC 101',
-        icon: 'pi pi-fw pi-book',
+        label: 'Learn',
+        icon: 'pi pi-fw pi-eye',
         items: [
           {
-            label: 'Learn',
-            icon: 'pi pi-fw pi-eye',
-            items: [
-              {
-                label: 'Liste',
-                routerLink: 'learn/list/lpic101',
-                icon: 'pi pi-fw pi-list',
-              },
-              {
-                label: 'Einzelnd',
-                routerLink: 'learn/single/lpic101',
-                icon: 'pi pi-fw pi-eye',
-              },
-            ]
+            label: 'LPIC 101',
+            routerLink: 'learn/single/lpic101',
+            icon: 'pi pi-fw pi-book',
           },
           {
-            label: 'Check',
-            routerLink: 'check/lpic101',
-            icon: 'pi pi-fw pi-check-circle',
+            label: 'LPIC 102',
+            routerLink: 'learn/single/lpic102',
+            icon: 'pi pi-fw pi-book',
           },
-          {
-            label: 'Exam',
-            routerLink: 'exam/lpic101',
-            icon: 'pi pi-fw pi-pencil',
-          },
-        ],
+        ]
       },
       {
-        label: 'LPIC 102',
-        icon: 'pi pi-fw pi-book',
+        label: 'Check',
+        icon: 'pi pi-fw pi-check-circle',
         items: [
           {
-            label: 'Learn',
-            icon: 'pi pi-fw pi-eye',
-            items: [
-              {
-                label: 'Liste',
-                routerLink: 'learn/list/lpic102',
-                icon: 'pi pi-fw pi-list',
-              },
-              {
-                label: 'Einzelnd',
-                routerLink: 'learn/single/lpic102',
-                icon: 'pi pi-fw pi-eye',
-              },
-            ]
+            label: 'LPIC 101',
+            routerLink: 'check/lpic101',
+            icon: 'pi pi-fw pi-book',
           },
           {
-            label: 'Check',
+            label: 'LPIC 102',
             routerLink: 'check/lpic102',
-            icon: 'pi pi-fw pi-check-circle',
+            icon: 'pi pi-fw pi-book',
+          },
+        ]
+      }, 
+      {
+        label: 'Exam',
+        icon: 'pi pi-fw pi-pencil',
+        items: [
+          {
+            label: 'LPIC 101',
+            routerLink: 'exam/lpic101',
+            icon: 'pi pi-fw pi-book',
           },
           {
-            label: 'Exam',
+            label: 'LPIC 102',
             routerLink: 'exam/lpic102',
-            icon: 'pi pi-fw pi-pencil',
+            icon: 'pi pi-fw pi-book',
           },
-        ],
-      },
+        ]
+        
+      },  
+      {
+        label: 'Fragenliste',
+        icon: 'pi pi-fw pi-list',
+        items: [
+          {
+            label: 'LPIC 101',
+            routerLink: 'learn/list/lpic101',
+            icon: 'pi pi-fw pi-book',
+          },
+          {
+            label: 'LPIC 102',
+            routerLink: 'learn/list/lpic102',
+            icon: 'pi pi-fw pi-book',
+          },
+        ]
+      },  
       {
         label: 'Einstellungen',
         routerLink: 'options',

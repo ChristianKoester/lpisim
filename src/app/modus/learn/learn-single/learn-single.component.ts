@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Question } from '../../../shared/question.model';
-import { QuestionService } from '../../../shared/question.service';
+import { QuestionApiService } from '../../../shared/question-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class LearnSingleComponent {
   id: number = 1;
 
   constructor(
-    private qServ: QuestionService,
+    private qServ: QuestionApiService,
     private route: ActivatedRoute,
     private router: Router,
   ) {}

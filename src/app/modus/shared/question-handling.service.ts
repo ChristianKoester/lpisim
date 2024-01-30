@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { QuestionService } from '../../shared/question.service';
+import { QuestionApiService } from '../../shared/question-api.service';
 import { Question } from '../../shared/question.model';
 import { ReplaySubject } from 'rxjs';
+import { OptionsService } from '../../shared/options.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,18 +15,27 @@ export class QuestionHandlingService {
   currentQuestion: Question;
   currentIndex: number;
 
-  constructor(private qServ: QuestionService) {}
+  constructor(
+    private qServ: QuestionApiService,
+    private optionsServ: OptionsService
+  ) {}
 
-  loadQuestions(collection: string, shuffle: boolean, questionCount?: number) {
+  loadQuestions(collection: string, modus: string) {
+    const shuffle =
+      modus === 'check'
+        ? this.optionsServ.options.shuffleCheck
+        : this.optionsServ.options.shuffleExam;
+    const questionCount =
+      modus === 'check'
+        ? this.optionsServ.options.qMaxCheck
+        : this.optionsServ.options.qMaxExam;
     this.qServ.getQuestions(collection).subscribe((questions) => {
       this.questions = questions;
       if (shuffle) {
         this.shuffleQuestions();
       }
-      if (typeof questionCount !== 'undefined') {
-        if (questionCount < questions.length) {
-          this.questions = questions.slice(0, questionCount);
-        }
+      if (questionCount < questions.length && questionCount > 0) {
+        this.questions = questions.slice(0, questionCount);
       }
       this.currentIndex = 0;
       this.currentQuestion = questions[this.currentIndex];
@@ -53,7 +63,7 @@ export class QuestionHandlingService {
   }
 
   specificQuestion(id: number) {
-    const index = this.questions.findIndex(val => val.id === id);
+    const index = this.questions.findIndex((val) => val.id === id);
     this.currentQuestion = this.questions[index];
     this.currentIndex = index;
     this._question$.next(this.currentQuestion);

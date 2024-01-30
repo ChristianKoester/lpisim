@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionService } from '../../../shared/question.service';
+import { QuestionApiService } from '../../../shared/question-api.service';
 import { Question } from '../../../shared/question.model';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ export class LearnListComponent implements OnInit {
   questions$: Observable<Question[]>;
 
   constructor(
-    private qServ: QuestionService,
+    private qServ: QuestionApiService,
     private route: ActivatedRoute
   ) {}
 

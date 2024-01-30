@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionHandlingService } from '../question-handling.service';
 import { QuizHandlingService } from '../quiz-handling.service';
-import { tap } from 'rxjs';
+import { AnsweredQuestion, Question } from '../../../shared/question.model';
 
 @Component({
   selector: 'lpi-result',
@@ -12,16 +12,20 @@ export class ResultComponent implements OnInit {
   data: any;
   options: any;
 
+  showAnswers: boolean = false;
+  answeredQuestions: AnsweredQuestion[];
+
   correctAnswers: number = 0;
   falseAnswers: number = 0;
   skippedAnswers: number = 0;
 
   constructor(
-    private qHandler: QuestionHandlingService,
     private quizHandler: QuizHandlingService,
   ) {}
 
   ngOnInit(): void {
+    this.answeredQuestions =this.quizHandler.answerdQuestions;
+
     this.quizHandler.skipped$.subscribe(
       (skipped => this.skippedAnswers = skipped.length)
     ).unsubscribe();

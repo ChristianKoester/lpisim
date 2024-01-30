@@ -24,7 +24,7 @@ export class FillInComponent implements OnInit, OnDestroy {
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
       if (question.type === 'fill') {
         this.question = question;
-        const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.qid === question.id);
+        const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.question.id === question.id);
         this.givenAnswer = '';
         if (answeredIndex !== -1)
           this.givenAnswer += this.quizHandler.answerdQuestions[answeredIndex].answers[0];

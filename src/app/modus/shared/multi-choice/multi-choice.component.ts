@@ -24,7 +24,7 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
       if (question.type === 'multi') {
         this.question = question;
-        const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.qid === question.id);
+        const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.question.id === question.id);
         this.selectedAnswers = [];
         this.quizHandler.answerdQuestions[answeredIndex]?.answers.map((answer => this.selectedAnswers.push(+answer)));
       }

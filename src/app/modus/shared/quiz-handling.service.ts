@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { QuestionHandlingService } from './question-handling.service';
-import { Question } from '../../shared/question.model';
+import { AnsweredQuestion, Question } from '../../shared/question.model';
+import { ErrorMsg } from './error-msg.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +16,10 @@ export class QuizHandlingService {
   private _skipped$: BehaviorSubject<Question[]> = new BehaviorSubject<Question[]>([]);
   skipped$ = this._skipped$.asObservable();
 
-  answerdQuestions: {
-    qid: number;
-    correct: boolean;
-    answers: string[];
-  }[] = [];
+  private _errorMsg$: Subject<ErrorMsg> = new Subject<ErrorMsg>();
+  errorMsg$ = this._errorMsg$.asObservable();
+
+  answerdQuestions: AnsweredQuestion[] = [];
 
   private skippedQuestions: Question[] = [];
   private wrongAnswersCount: number = 0;
@@ -28,7 +27,6 @@ export class QuizHandlingService {
 
   constructor(
     private qHandler: QuestionHandlingService,
-    private router: Router,
   ) {}
 
 
@@ -60,17 +58,17 @@ export class QuizHandlingService {
 
   addToAnswers(answers: string[], valid: boolean) {
     const existIndex = this.answerdQuestions.findIndex(
-      (val) => val.qid === this.qHandler.currentQuestion.id
+      (val) => val.question.id === this.qHandler.currentQuestion.id
     );
     if (existIndex === -1) {
       this.answerdQuestions.push({
-        qid: this.qHandler.currentQuestion.id,
+        question: this.qHandler.currentQuestion,
         correct: valid,
         answers: answers,
       });
     } else {
       this.answerdQuestions[existIndex] = {
-        qid: this.qHandler.currentQuestion.id,
+        question: this.qHandler.currentQuestion,
         correct: valid,
         answers: answers,
       };
@@ -89,11 +87,9 @@ export class QuizHandlingService {
       this.wrongAnswersCount++;
     switch (this.quizType) {
       case 'exam': 
-        console.log('start examHandler');
         this.handleExamValidation();
         break;
       case 'check':
-        console.log('start checkHandler');
         this.handleCheckValidation(valid);
         break;
        }     
@@ -108,22 +104,35 @@ export class QuizHandlingService {
       falseAnswers >= questionsCount * 0.2 ||
       this.qHandler.currentIndex === questionsCount - 1
     ) {
-      this.router.navigateByUrl(`/${this.quizType}/result`);
+      this._errorMsg$.next({
+        'header': 'Zuviele falsche Antworten',
+        'body': 'Du sollst nicht raten! Benutze den Learn-Modus!',
+        'critical': true
+      });
     } else {
       this.qHandler.nextQuestion();
     }
   }
 
-  handleCheckValidation(valid?: boolean) {
+  handleCheckValidation(valid: boolean) {
     const questionsCount = this.qHandler.questions.length;
     if (
       this.wrongAnswersCount >= 7 ||
       this.qHandler.currentIndex === questionsCount - 1
     ) {
-      this.router.navigateByUrl(`/${this.quizType}/result`);
+      this._errorMsg$.next({
+        'header': 'Zuviele falsche Antworten',
+        'body': 'Du sollst nicht raten! Benutze den Learn-Modus!',
+        'critical': true
+      });
     } else if (valid) {
       this.qHandler.nextQuestion();
     } else {
+      this._errorMsg$.next({
+        'header': 'Ups...',
+        'body': 'Das war leider so nicht korrekt. Du bist kacke!',
+        'critical': false
+      });
       this.qHandler.previousQuestion();
     }
   }
