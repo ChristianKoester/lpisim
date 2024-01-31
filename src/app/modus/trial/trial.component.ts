@@ -81,7 +81,7 @@ export class TrialComponent implements OnInit, OnDestroy {
       key: 'tc',
       severity: 'info',
       summary: 'Frage übersprungen',
-      detail: 'Die Frage wurde für später vorgemerkt.',
+      detail: 'Die Frage wurde in der Sidebar vorgemerkt.',
     });
     this.qHandler.nextQuestion();
   }

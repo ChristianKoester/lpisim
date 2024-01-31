@@ -14,16 +14,17 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
   currentQuestion: Question;
   selectedAnswer: number;
 
-  constructor(
-    private qHandler: QuestionHandlingService,
-  ) {}
+  constructor(private qHandler: QuestionHandlingService) {}
 
   ngOnInit(): void {
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
       if (question.type === 'single') {
         this.currentQuestion = question;
-        this.selectedAnswer = question.answers.findIndex((x) => x.chosen);
-        if (this.selectedAnswer === -1) this.selectedAnswer = null;
+        this.selectedAnswer = null;
+        if (question.answered === true) {
+          this.selectedAnswer = question.answers.findIndex((x) => x.chosen);
+          //if (this.selectedAnswer === -1) this.selectedAnswer = null;
+        }
       }
     });
     this.subValidation = this.qHandler.startValidation$.subscribe((type) => {
@@ -39,12 +40,12 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
   validateAnswer() {
     if (this.selectedAnswer !== null) {
       this.currentQuestion.answers[this.selectedAnswer].chosen = true;
-      if (this.currentQuestion.answers[this.selectedAnswer].correct) 
+      if (this.currentQuestion.answers[this.selectedAnswer].correct)
         this.currentQuestion.correct = true;
-    //   else
-    //     this.currentQuestion.correct = false;
-    // } else {
-    //   this.currentQuestion.correct = false;
+      //   else
+      //     this.currentQuestion.correct = false;
+      // } else {
+      //   this.currentQuestion.correct = false;
     }
     this.qHandler.handleValidation();
   }

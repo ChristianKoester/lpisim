@@ -62,7 +62,7 @@ export class FileParserService {
         let type = 'single';
         if (!choices.length) {
           type = 'fill';
-          choices.push({ answer: solution, correct: true });
+          //choices.push({ answer: solution, correct: true });
         } else {
           if (solution.length > 1) {
             type = 'multi';
@@ -79,8 +79,12 @@ export class FileParserService {
           id: id,
           type: type,
           question: question,
-          answers: choices,
         };
+        if (choices.length > 0) {
+          q.answers = choices;
+        } else {
+          q.fillInAnswer = solution;
+        }
 
         // Add question to list
         questions.push(q);

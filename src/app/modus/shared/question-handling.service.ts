@@ -20,7 +20,6 @@ export class QuestionHandlingService implements OnInit {
   currentQuestion: Question;
   currentIndex: number;
 
-  // Refactor!
   totalWrongQuestions: number = 0;
   totalQuestions: number = 0;
 
@@ -125,8 +124,8 @@ export class QuestionHandlingService implements OnInit {
 
   private examValidation() {
     if (
-      this.totalWrongQuestions >= this.totalQuestions * 0.2 ||
-      this.currentIndex === this.totalQuestions - 1 // WHY ???
+      this.totalWrongQuestions >= this.totalQuestions * 0.2 
+      // || this.currentIndex === this.totalQuestions - 1 // WHY ???
     ) {
       this.errorMsgServ.tooManyWrongAnswers();
     } else {
@@ -136,14 +135,18 @@ export class QuestionHandlingService implements OnInit {
 
   private checkValidation() {
     if (
-      this.totalWrongQuestions >= 7 ||
-      this.currentIndex === this.totalQuestions - 1 // WHY ???
+      this.totalWrongQuestions >= 7 
+      // || this.currentIndex === this.totalQuestions - 1 // WHY ???
     ) {
       this.errorMsgServ.tooManyWrongAnswers();
     } else if (this.currentQuestion.correct) {
       this.nextQuestion();
     } else {
       this.errorMsgServ.wrongAnswer();
+      this.currentQuestion.answered = false;
+      if (this.currentIndex > 0) {
+        this.questions[this.currentIndex - 1].answered = false;
+      }
       this.previousQuestion();
     }
   }

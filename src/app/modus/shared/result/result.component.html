@@ -23,22 +23,52 @@
         </div>
       </div>
       <ng-container *ngIf="showAnswers">
-        <div *ngFor="let q of questions">
-          <p>Frage {{ q.id }}</p>
+        <div *ngFor="let q of questions; index as i">
+          <h4>
+            Frage {{ i + 1 }} -
+            <span *ngIf="q.skipped && !q.answered" class="text-yellow-500">Übersprungen</span>
+            <span *ngIf="(q.skipped && q.answered) || (q.skipped && !q.correct)" class="text-orange-300">Erst beantwortet, dann übersprungen</span>
+            <span *ngIf="q.answered && q.correct && !q.skipped" class="text-green-500">Korrekt</span>
+            <span *ngIf="q.answered && !q.correct && !q.skipped" class="text-red-500">Falsch</span>
+            <span *ngIf="!q.answered && !q.skipped" class="text-blue-500">Nicht bearbeitet</span>
+          </h4>
           <p>{{ q.question }}</p>
           <ul>
-            <li 
-              *ngFor="let item of q.answers" 
-              [ngClass]="{'bg-green-200': item.correct,'font-bold': item.chosen}">
-              {{ item.answer }} 
-            </li>
+            <ng-container *ngIf="q.type === 'fill'; else elseTypeTempl">
+              <p>Antwort: {{ q.fillInAnswer }}</p>
+              <p
+                [ngClass]="{
+                  'font-bold': q.answered,
+                  'text-green-500': q.correct && q.answered,
+                  'text-red-500': !q.correct && q.answered
+                }"
+              >
+                Deine Antwort: {{ q.givenAnswer }}
+              </p>
+            </ng-container>
+            <ng-container>
+              <li
+                *ngFor="let item of q.answers"
+                [ngClass]="{
+                  'bg-green-200': item.correct,
+                  'font-bold': item.chosen,
+                  'text-green-500': item.chosen && q.correct,
+                  'text-red-500': item.chosen && !q.correct
+                }"
+              >
+                {{ item.answer }}
+              </li>
+            </ng-container>
           </ul>
-          <hr>
+          <hr />
         </div>
       </ng-container>
-      <p-toolbar>
-          <p-button label="Schließen" routerLink="/home"></p-button>
-          <p-button label="Antworten zeigen" (onClick)="showAnswers = true"></p-button>
+      <p-toolbar [ngClass]="['sticky bottom-0']">
+        <p-button label="Schließen" routerLink="/home"></p-button>
+        <p-button
+          label="Detailansicht"
+          (onClick)="showAnswers = !showAnswers"
+        ></p-button>
       </p-toolbar>
     </p-fieldset>
   </div>

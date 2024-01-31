@@ -40,12 +40,19 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
   }
 
   validateAnswer() {
-    this.selectedAnswers.forEach(element => {
-      this.currentQuestion.answers[element].chosen=true;
-    });
+    for (let index = 0; index < this.currentQuestion.answers.length; index++){
+      if (this.selectedAnswers.includes(index)) {
+        this.currentQuestion.answers[index].chosen=true;
+      } else {
+        this.currentQuestion.answers[index].chosen=false;
+      }
+    }
+    // this.selectedAnswers.forEach(element => {
+    //   this.currentQuestion.answers[element].chosen=true;
+    // });
     let correct: boolean = true;
     this.currentQuestion.answers.forEach(element => {
-      if (element.correct !== element.correct)
+      if (element.correct != element.chosen)
         correct = false;
     });
     this.currentQuestion.correct = correct;
