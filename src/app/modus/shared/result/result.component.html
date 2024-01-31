@@ -25,7 +25,7 @@
       <ng-container *ngIf="showAnswers">
         <div *ngFor="let q of questions; index as i">
           <h4>
-            Frage {{ i + 1 }} -
+            Frage {{ i + 1 }} - Status: 
             <span *ngIf="q.skipped && !q.answered" class="text-yellow-500">Übersprungen</span>
             <span *ngIf="(q.skipped && q.answered) || (q.skipped && !q.correct)" class="text-orange-300">Erst beantwortet, dann übersprungen</span>
             <span *ngIf="q.answered && q.correct && !q.skipped" class="text-green-500">Korrekt</span>
