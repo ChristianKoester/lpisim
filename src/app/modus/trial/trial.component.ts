@@ -5,6 +5,7 @@ import { QuestionHandlingService } from '../shared/question-handling.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { ErrorMsg } from '../shared/error-msg.model';
+import { ErrorMessageService } from '../shared/error-message.service';
 
 @Component({
   selector: 'lpi-trial',
@@ -31,6 +32,7 @@ export class TrialComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService,
+    private errorMsgServ: ErrorMessageService
   ) { }
 
   ngOnInit(): void {
@@ -43,10 +45,10 @@ export class TrialComponent implements OnInit, OnDestroy {
       this.currentQuestion = question;
       this.currentIndex = this.qHandler.currentIndex;
       this.maxQuestionsSeen = Math.max(this.currentIndex, this.maxQuestionsSeen);
-      this.totalQuestions = this.qHandler.getAllQuestions().length;
+      this.totalQuestions = this.qHandler.totalQuestions;
     });
 
-    this.subError = this.qHandler.errorMsg$.subscribe(
+    this.subError = this.errorMsgServ.errorMsg$.subscribe(
       error => { 
         this.errorMsg = error;
         this.dialogVisible = true;

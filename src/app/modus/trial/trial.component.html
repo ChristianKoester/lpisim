@@ -68,6 +68,7 @@
             severity="warning"
             label="Überspringen"
             icon="pi pi-hourglass"
+            [disabled]="currentQuestion.answered"
             (click)="onSkip()"
           >
           </p-button>

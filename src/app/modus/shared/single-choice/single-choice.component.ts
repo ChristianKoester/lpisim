@@ -39,9 +39,13 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
   validateAnswer() {
     if (this.selectedAnswer !== null) {
       this.currentQuestion.answers[this.selectedAnswer].chosen = true;
-      if (this.currentQuestion.answers[this.selectedAnswer].correct)
+      if (this.currentQuestion.answers[this.selectedAnswer].correct) 
         this.currentQuestion.correct = true;
+    //   else
+    //     this.currentQuestion.correct = false;
+    // } else {
+    //   this.currentQuestion.correct = false;
     }
-    this.qHandler.handleValidation(true);
+    this.qHandler.handleValidation();
   }
 }

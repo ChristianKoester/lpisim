@@ -12,9 +12,3 @@ export interface Question {
   skipped?: boolean,
   correct?: boolean,
 }
-
-export interface AnsweredQuestion {
-  question: Question,
-  correct: boolean,
-  answers: string[],
-}

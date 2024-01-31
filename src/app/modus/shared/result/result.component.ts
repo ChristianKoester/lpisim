@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionHandlingService } from '../question-handling.service';
+import { Question } from '../../../shared/question.model';
 
 @Component({
   selector: 'lpi-result',
@@ -10,36 +12,44 @@ export class ResultComponent implements OnInit {
   options: any;
 
   showAnswers: boolean = false;
-  // answeredQuestions: AnsweredQuestion[];
+  questions: Question[];
 
-  correctAnswers: number = 0;
-  falseAnswers: number = 0;
-  skippedAnswers: number = 0;
+  correctQuestions: number = 0;
+  wrongQuestions: number = 0;
+  skippedQuestions: number = 0;
   untouchedQuestions: number = 0.0001;
 
-  constructor() {}
+  constructor(private qHandler: QuestionHandlingService) {}
 
   ngOnInit(): void {
-    // this.answeredQuestions =this.quizHandler.answerdQuestions;
-
-    // this.quizHandler.skipped$.subscribe(
-    //   (skipped => this.skippedAnswers = skipped.length)
-    // ).unsubscribe();
-    // this.correctAnswers = this.quizHandler.answerdQuestions.reduce(
-    //   (acc, val) => (val.correct ? acc + 1 : acc), 0 
-    // );
-    // this.falseAnswers = this.quizHandler.answerdQuestions.reduce(
-    //   (acc, val) => (!val.correct ? acc + 1 : acc ), 0
-    // )
+    this.questions = this.qHandler.getAllQuestions()
+    this.correctQuestions = 0;
+    this.wrongQuestions = 0;
+    this.skippedQuestions = 0;
+    this.untouchedQuestions = this.qHandler.totalQuestions;
+    this.questions?.forEach(q => {
+      if (q.answered) {
+        this.untouchedQuestions--;
+        if (q.correct) {
+          this.correctQuestions++;
+        } else {
+          this.wrongQuestions++;
+        }
+      }
+      if (q.skipped) {
+        this.skippedQuestions++;
+      }
+    })
+    this.wrongQuestions = Math.max(this.wrongQuestions, this.qHandler.totalWrongQuestions);
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
 
     this.data = {
-      labels: ['Korrekt', 'Übersprungen', 'Falsch'],
+      labels: ['Korrekt', 'Übersprungen', 'Falsch', 'Unbearbeitet'],
       datasets: [
         {
-          data: [this.correctAnswers, this.skippedAnswers, this.falseAnswers, this.untouchedQuestions],
+          data: [this.correctQuestions, this.skippedQuestions, this.wrongQuestions, this.untouchedQuestions],
           backgroundColor: [
             documentStyle.getPropertyValue('--green-500'),
             documentStyle.getPropertyValue('--yellow-500'),

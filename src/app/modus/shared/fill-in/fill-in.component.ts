@@ -39,6 +39,6 @@ export class FillInComponent implements OnInit, OnDestroy {
     if (this.givenAnswer === this.currentQuestion.answers[0].answer)
       this.currentQuestion.correct = true;
 
-    this.qHandler.handleValidation(true);
+    this.qHandler.handleValidation();
   }
 }

@@ -4,16 +4,16 @@
       <div class="grid">
         <div class="col">
           <h3 class="border-1 border-round border-green-500 p-2">
-            Korrekt beantwortete Fragen = {{ correctAnswers }}
+            Korrekt beantwortete Fragen = {{ correctQuestions }}
           </h3>
           <h3 class="border-1 border-round border-red-500 p-2">
-            Falsche beantwortete Fragen = {{ falseAnswers }}
+            Falsch beantwortete Fragen = {{ wrongQuestions }}
           </h3>
           <h3 class="border-1 border-round border-yellow-500 p-2">
-            Übersprungene Fragen = {{ skippedAnswers }}
+            Übersprungene Fragen = {{ skippedQuestions }}
           </h3>
           <h3 class="border-1 border-round border-gray-200 p-2">
-            Unbearbeitete Fragen = "not implemented"
+            Unbearbeitete Fragen = {{ untouchedQuestions }}
           </h3>
         </div>
         <div class="col">
@@ -23,12 +23,14 @@
         </div>
       </div>
       <ng-container *ngIf="showAnswers">
-        <div *ngFor="let q of answeredQuestions">
-          <p>Frage {{ q.question.id }}</p>
-          <p>{{ q.question.question }}</p>
+        <div *ngFor="let q of questions">
+          <p>Frage {{ q.id }}</p>
+          <p>{{ q.question }}</p>
           <ul>
-            <li *ngFor="let item of q.question.answers" [ngClass]="{'bg-green-200': item.correct}">
-              {{ item.answer }}
+            <li 
+              *ngFor="let item of q.answers" 
+              [ngClass]="{'bg-green-200': item.correct,'font-bold': item.chosen}">
+              {{ item.answer }} 
             </li>
           </ul>
           <hr>

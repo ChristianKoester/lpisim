@@ -50,6 +50,6 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
     });
     this.currentQuestion.correct = correct;
 
-    this.qHandler.handleValidation(true);
+    this.qHandler.handleValidation();
   }
 }

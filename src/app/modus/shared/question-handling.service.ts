@@ -1,22 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { QuestionApiService } from '../../shared/question-api.service';
 import { Question } from '../../shared/question.model';
 import { ReplaySubject, Subject } from 'rxjs';
 import { OptionsService } from '../../shared/options.service';
-import { ErrorMsg } from './error-msg.model';
+import { ErrorMessageService } from './error-message.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class QuestionHandlingService {
+export class QuestionHandlingService implements OnInit {
   private _question$: ReplaySubject<Question> = new ReplaySubject<Question>(1);
   question$ = this._question$.asObservable();
 
   private _startValidation$: Subject<string> = new Subject<string>();
   startValidation$ = this._startValidation$.asObservable();
-
-  private _errorMsg$: Subject<ErrorMsg> = new Subject<ErrorMsg>();
-  errorMsg$ = this._errorMsg$.asObservable();
 
   private modus = '';
   private questions: Question[];
@@ -24,12 +21,18 @@ export class QuestionHandlingService {
   currentIndex: number;
 
   // Refactor!
-  private wrongAnswersCount: number = 0;
+  totalWrongQuestions: number = 0;
+  totalQuestions: number = 0;
 
   constructor(
     private qServ: QuestionApiService,
-    private optionsServ: OptionsService
+    private optionsServ: OptionsService,
+    private errorMsgServ: ErrorMessageService
   ) {}
+
+  ngOnInit(): void {
+    
+  }
 
   loadQuestions(collection: string, modus: string) {
     this.modus = modus;
@@ -51,11 +54,14 @@ export class QuestionHandlingService {
       }
 
       if (questionCount < questions.length && questionCount > 0) {
-        this.questions = questions.slice(0, questionCount);
+        this.questions = this.questions.slice(0, questionCount);
       }
 
+      this.totalWrongQuestions = 0;
+      this.totalQuestions = this.questions.length;
       this.currentIndex = 0;
       this.currentQuestion = questions[this.currentIndex];
+
       this._question$.next(this.currentQuestion);
     });
   }
@@ -104,57 +110,40 @@ export class QuestionHandlingService {
     this._startValidation$.next(this.currentQuestion.type);
   }
 
-  handleValidation(valid: boolean) {
-    if (!valid) this.wrongAnswersCount++;
-    switch (this.modus) {
-      case 'exam':
-        this.handleExamValidation();
-        break;
-      case 'check':
-        this.handleCheckValidation(valid);
-        break;
+  handleValidation() {
+    this.currentQuestion.answered = true;
+    if (this.currentQuestion.skipped) this.currentQuestion.skipped = false;
+    if (!this.currentQuestion.correct) {
+      this.totalWrongQuestions++;
+    }
+    if (this.modus === 'exam') {
+      this.examValidation();
+    } else {
+      this.checkValidation();
     }
   }
 
-  private handleExamValidation() {
-    const questionsCount = this.questions.length;
-    // const falseAnswers = this.answerdQuestions.filter(
-    //   (val) => !val.correct
-    // ).length;
-    const falseAnswers = 0;
+  private examValidation() {
     if (
-      falseAnswers >= questionsCount * 0.2 ||
-      this.currentIndex === questionsCount - 1
+      this.totalWrongQuestions >= this.totalQuestions * 0.2 ||
+      this.currentIndex === this.totalQuestions - 1 // WHY ???
     ) {
-      this._errorMsg$.next({
-        header: 'Zuviele falsche Antworten',
-        body: 'Du sollst nicht raten! Benutze den Learn-Modus!',
-        critical: true,
-      });
+      this.errorMsgServ.tooManyWrongAnswers();
     } else {
       this.nextQuestion();
     }
   }
 
-  private handleCheckValidation(valid: boolean) {
-    const questionsCount = this.questions.length;
+  private checkValidation() {
     if (
-      this.wrongAnswersCount >= 7 ||
-      this.currentIndex === questionsCount - 1
+      this.totalWrongQuestions >= 7 ||
+      this.currentIndex === this.totalQuestions - 1 // WHY ???
     ) {
-      this._errorMsg$.next({
-        header: 'Zuviele falsche Antworten',
-        body: 'Du sollst nicht raten! Benutze den Learn-Modus!',
-        critical: true,
-      });
-    } else if (valid) {
+      this.errorMsgServ.tooManyWrongAnswers();
+    } else if (this.currentQuestion.correct) {
       this.nextQuestion();
     } else {
-      this._errorMsg$.next({
-        header: 'Ups...',
-        body: 'Das war leider so nicht korrekt. Du bist kacke!',
-        critical: false,
-      });
+      this.errorMsgServ.wrongAnswer();
       this.previousQuestion();
     }
   }
