@@ -25,45 +25,44 @@ export class QuestionHandlingService {
       modus === 'check'
         ? this.optionsServ.options.shuffleCheck
         : this.optionsServ.options.shuffleExam;
+
     const questionCount =
       modus === 'check'
         ? this.optionsServ.options.qMaxCheck
         : this.optionsServ.options.qMaxExam;
+
     this.qServ.getQuestions(collection).subscribe((questions) => {
       this.questions = questions;
+
       if (shuffle) {
         this.shuffleQuestions();
       }
+      
       if (questionCount < questions.length && questionCount > 0) {
         this.questions = questions.slice(0, questionCount);
       }
+      
       this.currentIndex = 0;
       this.currentQuestion = questions[this.currentIndex];
       this._question$.next(this.currentQuestion);
     });
   }
 
-  nextQuestion(id?: number) {
-    if (typeof id === 'undefined') {
-      id =
-        this.currentIndex < this.questions.length - 1
-          ? ++this.currentIndex
-          : this.currentIndex;
-    }
+  nextQuestion() {
+    if (this.currentIndex < this.questions.length - 1)
+      this.currentIndex++;
     this.currentQuestion = this.questions[this.currentIndex];
     this._question$.next(this.currentQuestion);
   }
 
-  previousQuestion(id?: number) {
-    if (typeof id === 'undefined') {
-      id = this.currentIndex > 0 ? --this.currentIndex : this.currentIndex;
-    }
+  previousQuestion() {
+    if (this.currentIndex > 0) 
+      this.currentIndex--;
     this.currentQuestion = this.questions[this.currentIndex];
     this._question$.next(this.currentQuestion);
   }
 
-  specificQuestion(id: number) {
-    const index = this.questions.findIndex((val) => val.id === id);
+  specificQuestion(index: number) {
     this.currentQuestion = this.questions[index];
     this.currentIndex = index;
     this._question$.next(this.currentQuestion);

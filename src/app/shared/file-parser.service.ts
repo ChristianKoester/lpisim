@@ -19,13 +19,13 @@ export class FileParserService {
             lines.push(line);
           }
         }
-        resolve(this.extractData(collection, lines));
+        resolve(this.extractData(lines));
       });
     })
   }
 
   
-  private extractData(collection: string, data: string[]): Question[] {
+  private extractData(data: string[]): Question[] {
     let questions: Question[] = [];
     for (let i = 0; i < data.length; i++) {
       if (data[i].startsWith('QUESTION')) {
@@ -77,7 +77,6 @@ export class FileParserService {
         // Build question object
         const q: Question = {
           id: id,
-          collection: collection,
           type: type,
           question: question,
           answers: choices,

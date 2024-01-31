@@ -1,6 +1,5 @@
 export interface Question {
   id: number,
-  collection: string,
   type: string,
   question: string,
   answers: {
