@@ -1,8 +1,7 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Question } from '../../../shared/question.model';
 import { QuestionHandlingService } from '../question-handling.service';
 import { Subscription } from 'rxjs';
-import { QuizHandlingService } from '../quiz-handling.service';
 
 @Component({
   selector: 'lpi-multi-choice',
@@ -17,16 +16,12 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
 
   constructor(
     private qHandler: QuestionHandlingService,
-    private quizHandler: QuizHandlingService,
   ) {}
   
   ngOnInit(): void {
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
       if (question.type === 'multi') {
         this.currentQuestion = question;
-        // const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.question.id === question.id);
-        // this.selectedAnswers = [];
-        // this.quizHandler.answerdQuestions[answeredIndex]?.answers.map((answer => this.selectedAnswers.push(+answer)));
         this.selectedAnswers = [];  // WARUM NOTWENDIG ???
         for (let index = 0; index < question.answers.length; index++) {
           if (question.answers[index].chosen) 
@@ -45,17 +40,6 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
   }
 
   validateAnswer() {
-    // let valid: boolean = true;
-    // for (let i = 0; i < this.currentQuestion.answers.length; i++) {
-    //   if (this.currentQuestion.answers[i].correct) {
-    //     if (!this.selectedAnswers.includes(i)) valid = false;
-    //   } else {
-    //     if (this.selectedAnswers.includes(i)) valid = false;
-    //   }
-    // }
-
-    // this.quizHandler.addToAnswers(this.selectedAnswers.map(value => value.toString()), valid);
-    // this.quizHandler.handleValidation(valid);
     this.selectedAnswers.forEach(element => {
       this.currentQuestion.answers[element].chosen=true;
     });

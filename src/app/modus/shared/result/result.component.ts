@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { QuizHandlingService } from '../quiz-handling.service';
-import { AnsweredQuestion } from '../../../shared/question.model';
 
 @Component({
   selector: 'lpi-result',
@@ -19,9 +17,7 @@ export class ResultComponent implements OnInit {
   skippedAnswers: number = 0;
   untouchedQuestions: number = 0.0001;
 
-  constructor(
-    private quizHandler: QuizHandlingService,
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     // this.answeredQuestions =this.quizHandler.answerdQuestions;

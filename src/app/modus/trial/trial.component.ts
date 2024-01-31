@@ -2,9 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Question } from '../../shared/question.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionHandlingService } from '../shared/question-handling.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { QuizHandlingService } from '../shared/quiz-handling.service';
 import { ErrorMsg } from '../shared/error-msg.model';
 
 @Component({
@@ -21,7 +20,6 @@ export class TrialComponent implements OnInit, OnDestroy {
   currentQuestion: Question;
   currentIndex: number;
   totalQuestions: number;
-  // skipped$: Observable<Question[]>;
   errorMsg: ErrorMsg = {header:"",body: "", critical: false};
   maxQuestionsSeen: number = 0;
 
@@ -30,7 +28,6 @@ export class TrialComponent implements OnInit, OnDestroy {
 
   constructor(
     private qHandler: QuestionHandlingService,
-    private quizHandler: QuizHandlingService,
     private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService,
@@ -39,7 +36,6 @@ export class TrialComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subRoute = this.route.paramMap.subscribe((params) => {
       this.quizType = params.get('modus');
-      // this.quizHandler.initQuiz(this.quizType);
       this.qHandler.loadQuestions(params.get('collection'), this.quizType);
     });
 
@@ -50,7 +46,6 @@ export class TrialComponent implements OnInit, OnDestroy {
       this.totalQuestions = this.qHandler.getAllQuestions().length;
     });
 
-    // this.skipped$ = this.quizHandler.skipped$;    // !!!
     this.subError = this.qHandler.errorMsg$.subscribe(
       error => { 
         this.errorMsg = error;
@@ -79,7 +74,6 @@ export class TrialComponent implements OnInit, OnDestroy {
   }
 
   onSkip() {
-    //this.quizHandler.addToSkip(this.currentQuestion);
     this.qHandler.setSkip();
     this.messageService.add({
       key: 'tc',
