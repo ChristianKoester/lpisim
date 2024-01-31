@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Question } from '../../../shared/question.model';
 import { QuestionHandlingService } from '../question-handling.service';
 import { Subscription } from 'rxjs';
@@ -12,25 +18,27 @@ import { QuizHandlingService } from '../quiz-handling.service';
 export class FillInComponent implements OnInit, OnDestroy {
   private subQuestion: Subscription;
   private subValidaton: Subscription;
-  question: Question;
+  currentQuestion: Question;
   givenAnswer: string = '';
 
   constructor(
     private qHandler: QuestionHandlingService,
-    private quizHandler: QuizHandlingService,
+    private quizHandler: QuizHandlingService
   ) {}
-  
+
   ngOnInit(): void {
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
       if (question.type === 'fill') {
-        this.question = question;
-        const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.question.id === question.id);
-        this.givenAnswer = '';
-        if (answeredIndex !== -1)
-          this.givenAnswer += this.quizHandler.answerdQuestions[answeredIndex].answers[0];
+        this.currentQuestion = question;
+        if (question.givenAnswer !== null)
+          this.givenAnswer = question.givenAnswer;
+        // const answeredIndex = this.quizHandler.answerdQuestions.findIndex(val => val.question.id === question.id);
+        // this.givenAnswer = '';
+        // if (answeredIndex !== -1)
+        //   this.givenAnswer += this.quizHandler.answerdQuestions[answeredIndex].answers[0];
       }
     });
-    this.subValidaton = this.quizHandler.startValidation$.subscribe((type) => {
+    this.subValidaton = this.qHandler.startValidation$.subscribe((type) => {
       if (type === 'fill') this.validateAnswer();
     });
   }
@@ -41,9 +49,14 @@ export class FillInComponent implements OnInit, OnDestroy {
   }
 
   validateAnswer() {
-    const valid = this.givenAnswer === this.question.answers[0].answer
+    // const valid = this.givenAnswer === this.currentQuestion.answers[0].answer
 
-    this.quizHandler.addToAnswers([this.givenAnswer], valid);
-    this.quizHandler.handleValidation(valid);
+    // this.quizHandler.addToAnswers([this.givenAnswer], valid);
+    // this.quizHandler.handleValidation(valid);
+    this.currentQuestion.givenAnswer = this.givenAnswer;
+    if (this.givenAnswer === this.currentQuestion.answers[0].answer)
+      this.currentQuestion.correct = true;
+
+    this.qHandler.handleValidation(true);
   }
 }

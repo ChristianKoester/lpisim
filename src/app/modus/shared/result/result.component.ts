@@ -12,7 +12,7 @@ export class ResultComponent implements OnInit {
   options: any;
 
   showAnswers: boolean = false;
-  answeredQuestions: AnsweredQuestion[];
+  // answeredQuestions: AnsweredQuestion[];
 
   correctAnswers: number = 0;
   falseAnswers: number = 0;
@@ -24,17 +24,17 @@ export class ResultComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.answeredQuestions =this.quizHandler.answerdQuestions;
+    // this.answeredQuestions =this.quizHandler.answerdQuestions;
 
-    this.quizHandler.skipped$.subscribe(
-      (skipped => this.skippedAnswers = skipped.length)
-    ).unsubscribe();
-    this.correctAnswers = this.quizHandler.answerdQuestions.reduce(
-      (acc, val) => (val.correct ? acc + 1 : acc), 0 
-    );
-    this.falseAnswers = this.quizHandler.answerdQuestions.reduce(
-      (acc, val) => (!val.correct ? acc + 1 : acc ), 0
-    )
+    // this.quizHandler.skipped$.subscribe(
+    //   (skipped => this.skippedAnswers = skipped.length)
+    // ).unsubscribe();
+    // this.correctAnswers = this.quizHandler.answerdQuestions.reduce(
+    //   (acc, val) => (val.correct ? acc + 1 : acc), 0 
+    // );
+    // this.falseAnswers = this.quizHandler.answerdQuestions.reduce(
+    //   (acc, val) => (!val.correct ? acc + 1 : acc ), 0
+    // )
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');

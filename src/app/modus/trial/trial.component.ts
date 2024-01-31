@@ -3,7 +3,7 @@ import { Question } from '../../shared/question.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionHandlingService } from '../shared/question-handling.service';
 import { Observable, Subscription } from 'rxjs';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { QuizHandlingService } from '../shared/quiz-handling.service';
 import { ErrorMsg } from '../shared/error-msg.model';
 
@@ -18,16 +18,15 @@ export class TrialComponent implements OnInit, OnDestroy {
   private subQuestion: Subscription;
   private subError: Subscription;
   quizType = '';
-  question: Question;
-  questionIndex: number;
-  numberQuestions: number;
-  skipped$: Observable<Question[]>;
+  currentQuestion: Question;
+  currentIndex: number;
+  totalQuestions: number;
+  // skipped$: Observable<Question[]>;
   errorMsg: ErrorMsg = {header:"",body: "", critical: false};
-  maxQuestSeen: number = 0;
+  maxQuestionsSeen: number = 0;
 
   dialogVisible: boolean = false;
   sidebarVisible: boolean = false;
-  items: MenuItem[];
 
   constructor(
     private qHandler: QuestionHandlingService,
@@ -40,17 +39,19 @@ export class TrialComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subRoute = this.route.paramMap.subscribe((params) => {
       this.quizType = params.get('modus');
-      this.quizHandler.initQuiz(this.quizType);
+      // this.quizHandler.initQuiz(this.quizType);
       this.qHandler.loadQuestions(params.get('collection'), this.quizType);
     });
+
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
-      this.question = question;
-      this.questionIndex = this.qHandler.currentIndex;
-      this.maxQuestSeen = Math.max(this.questionIndex, this.maxQuestSeen);
-      this.numberQuestions = this.qHandler.questions.length;
+      this.currentQuestion = question;
+      this.currentIndex = this.qHandler.currentIndex;
+      this.maxQuestionsSeen = Math.max(this.currentIndex, this.maxQuestionsSeen);
+      this.totalQuestions = this.qHandler.getAllQuestions().length;
     });
-    this.skipped$ = this.quizHandler.skipped$;
-    this.subError = this.quizHandler.errorMsg$.subscribe(
+
+    // this.skipped$ = this.quizHandler.skipped$;    // !!!
+    this.subError = this.qHandler.errorMsg$.subscribe(
       error => { 
         this.errorMsg = error;
         this.dialogVisible = true;
@@ -77,12 +78,9 @@ export class TrialComponent implements OnInit, OnDestroy {
     this.sidebarVisible = false;
   }
 
-  onExit() {
-    console.log('show results');
-  }
-
   onSkip() {
-    this.quizHandler.addToSkip(this.question);
+    //this.quizHandler.addToSkip(this.currentQuestion);
+    this.qHandler.setSkip();
     this.messageService.add({
       key: 'tc',
       severity: 'info',
@@ -93,7 +91,7 @@ export class TrialComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.quizHandler.validate();
+    this.qHandler.validateQuestion();
   }
 
   onShowSidebar() {
@@ -105,5 +103,9 @@ export class TrialComponent implements OnInit, OnDestroy {
     if (this.errorMsg.critical) {
       this.router.navigateByUrl(`/${this.quizType}/result`);
     }
+  }
+
+  getAllQuestions(): Question[] {
+    return this.qHandler.getAllQuestions();
   }
 }

@@ -1,8 +1,8 @@
-<ng-container *ngIf="question">
-  <p style="white-space: pre-line">{{ question.question }}</p>
+<ng-container *ngIf="currentQuestion">
+  <p style="white-space: pre-line">{{ currentQuestion.question }}</p>
   <div class="flex flex-column gap-2">
     <div
-      *ngFor="let answer of question.answers; index as i"
+      *ngFor="let answer of currentQuestion.answers; index as i"
       class="field-checkbox"
     >
       <p-radioButton

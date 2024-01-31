@@ -1,10 +1,10 @@
 <div class="grid">
-  <div class="col-8 col-offset-2" *ngIf="question">
+  <div class="col-8 col-offset-2" *ngIf="currentQuestion">
   <p-fieldset [legend]="quizType === 'check' ? 'Check-Modus' : 'Exam-Modus'">
     <p-panel>
       <ng-template pTemplate="header">
         <div class="flex align-items-center gap-2">
-          <h4 class="-my-1">Frage {{ questionIndex + 1 }} / {{ numberQuestions }}</h4>
+          <h4 class="-my-1">Frage {{ currentIndex + 1 }} / {{ totalQuestions }}</h4>
         </div>
       </ng-template>
       <ng-template pTemplate="icons">
@@ -15,11 +15,10 @@
             label="Beenden"
             icon="pi pi-times"
             routerLink="/exam/result"
-            (click)="onExit()"
           >
           </p-button>
       </ng-template>
-      <div style="min-height: 400px" [ngSwitch]="question.type">
+      <div style="min-height: 400px" [ngSwitch]="currentQuestion.type">
         <div *ngSwitchCase="'single'">
           <lpi-single-choice> </lpi-single-choice>
         </div>
@@ -38,7 +37,7 @@
             raised="true"
             severity="secondary"
             icon="pi pi-caret-left"
-            [disabled]="questionIndex <= 0"
+            [disabled]="currentIndex <= 0"
             (click)="onPreviousQuestion()"
           >
           </p-button>
@@ -49,7 +48,7 @@
             severity="secondary"
             icon="pi pi-caret-right"
             iconPos="right"
-            [disabled]="questionIndex >= maxQuestSeen"
+            [disabled]="currentIndex >= maxQuestionsSeen"
             (click)="onNextQuestion()"
           ></p-button>
           <p-button
@@ -74,7 +73,7 @@
           </p-button>
           <p-button
             [label]="
-              questionIndex === numberQuestions - 1 ? 'Beenden' : 'Antworten'
+              currentIndex === totalQuestions - 1 ? 'Beenden' : 'Antworten'
             "
             size="small"
             raised="true"
@@ -122,12 +121,14 @@
 
 <p-sidebar [(visible)]="sidebarVisible">
   <h3>Übersprungene Fragen</h3>
-  <div *ngFor="let qId of skipped$ | async; index as i">
+  <div *ngFor="let q of getAllQuestions(); index as i">
+    <ng-container *ngIf="q.skipped">
     <p-button 
-      [text]="true" 
-      severity="info"
-      (click)="onSpecificQuestion(i)"> 
-      Frage {{ i + 1 }}
-    </p-button>
+    [text]="true" 
+    severity="info"
+    (click)="onSpecificQuestion(i)"> 
+    Frage {{ i + 1 }}
+  </p-button>
+</ng-container>
   </div>
 </p-sidebar>
