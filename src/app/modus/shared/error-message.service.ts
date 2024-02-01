@@ -22,8 +22,16 @@ export class ErrorMessageService {
 
   wrongAnswer() {
     this._errorMsg$.next({
+      header: 'Falsche Antwort',
+      body: 'Das war leider so nicht korrekt. Du wirst eine Frage zurückgesetzt!',
+      critical: false,
+    });
+  }
+
+  noAnswer() {
+    this._errorMsg$.next({
       header: 'Ups...',
-      body: 'Das war leider so nicht korrekt. Du bist kacke!',
+      body: 'Du hast vergessen eine Antwort zu geben!',
       critical: false,
     });
   }

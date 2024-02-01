@@ -29,9 +29,7 @@ export class QuestionHandlingService implements OnInit {
     private errorMsgServ: ErrorMessageService
   ) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   loadQuestions(collection: string, modus: string) {
     this.modus = modus;
@@ -79,8 +77,31 @@ export class QuestionHandlingService implements OnInit {
     }
   }
 
+  // private shuffle(arr: any[]): any[] {
+  //   let currentIndex = arr.length;
+  //   let randomIndex: number;
+
+  //   while (currentIndex > 0) {
+  //     randomIndex = Math.floor(Math.random() * currentIndex);
+  //     currentIndex--;
+  //     [arr[currentIndex], arr[randomIndex]] = [
+  //       arr[randomIndex],
+  //       arr[currentIndex],
+  //     ];
+  //     return arr;
+  //   }
+  // }
+
   getAllQuestions(): Question[] {
     return this.questions;
+  }
+
+  getQuestion(index: number): Question {
+    return this.questions[index];
+  }
+
+  getModus(): string {
+    return this.modus;
   }
 
   nextQuestion() {
@@ -123,10 +144,7 @@ export class QuestionHandlingService implements OnInit {
   }
 
   private examValidation() {
-    if (
-      this.totalWrongQuestions >= this.totalQuestions * 0.2 
-      // || this.currentIndex === this.totalQuestions - 1 // WHY ???
-    ) {
+    if (this.totalWrongQuestions >= this.totalQuestions * 0.2) {
       this.errorMsgServ.tooManyWrongAnswers();
     } else {
       this.nextQuestion();
@@ -134,18 +152,17 @@ export class QuestionHandlingService implements OnInit {
   }
 
   private checkValidation() {
-    if (
-      this.totalWrongQuestions >= 7 
-      // || this.currentIndex === this.totalQuestions - 1 // WHY ???
-    ) {
+    if (this.totalWrongQuestions >= 7) {
       this.errorMsgServ.tooManyWrongAnswers();
     } else if (this.currentQuestion.correct) {
       this.nextQuestion();
     } else {
       this.errorMsgServ.wrongAnswer();
       this.currentQuestion.answered = false;
+      this.currentQuestion.correct = null;
       if (this.currentIndex > 0) {
         this.questions[this.currentIndex - 1].answered = false;
+        this.questions[this.currentIndex - 1].correct = null;
       }
       this.previousQuestion();
     }

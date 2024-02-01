@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Question } from '../../../shared/question.model';
 import { QuestionHandlingService } from '../question-handling.service';
 import { Subscription } from 'rxjs';
+import { ErrorMessageService } from '../error-message.service';
 
 @Component({
   selector: 'lpi-single-choice',
@@ -14,7 +15,10 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
   currentQuestion: Question;
   selectedAnswer: number;
 
-  constructor(private qHandler: QuestionHandlingService) {}
+  constructor(
+    private qHandler: QuestionHandlingService,
+    private errorMsgServ: ErrorMessageService,
+  ) {}
 
   ngOnInit(): void {
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
@@ -23,7 +27,6 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
         this.selectedAnswer = null;
         if (question.answered === true) {
           this.selectedAnswer = question.answers.findIndex((x) => x.chosen);
-          //if (this.selectedAnswer === -1) this.selectedAnswer = null;
         }
       }
     });
@@ -42,11 +45,9 @@ export class SingleChoiceComponent implements OnInit, OnDestroy {
       this.currentQuestion.answers[this.selectedAnswer].chosen = true;
       if (this.currentQuestion.answers[this.selectedAnswer].correct)
         this.currentQuestion.correct = true;
-      //   else
-      //     this.currentQuestion.correct = false;
-      // } else {
-      //   this.currentQuestion.correct = false;
+      this.qHandler.handleValidation();
+    } else {
+      this.errorMsgServ.noAnswer();
     }
-    this.qHandler.handleValidation();
   }
 }

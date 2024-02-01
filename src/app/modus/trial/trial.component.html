@@ -11,8 +11,8 @@
         <p-button
             size="small"
             raised="true"
-            severity="danger"
-            label="Beenden"
+            severity="primary"
+            label="Beenden & Auswerten"
             icon="pi pi-times"
             routerLink="/exam/result"
           >
@@ -68,18 +68,19 @@
             severity="warning"
             label="Überspringen"
             icon="pi pi-hourglass"
+            [disabled]="currentQuestion.answered"
             (click)="onSkip()"
           >
           </p-button>
+          <p-confirmDialog></p-confirmDialog>
           <p-button
-            [label]="
-              currentIndex === totalQuestions - 1 ? 'Beenden' : 'Antworten'
-            "
+            label="Antworten"
             size="small"
             raised="true"
             severity="success"
             icon="pi pi-check"
-            (click)="onSubmit()"
+            [disabled]="currentQuestion.answered"
+            (click)="onSubmit($event)"
           >
           </p-button>
         </div>

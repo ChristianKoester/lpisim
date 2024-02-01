@@ -17,19 +17,22 @@ export class ResultComponent implements OnInit {
   correctQuestions: number = 0;
   wrongQuestions: number = 0;
   skippedQuestions: number = 0;
-  untouchedQuestions: number = 0.0001;
+  uneditedQuestions: number = 0;
+
+  modus: string;
 
   constructor(private qHandler: QuestionHandlingService) {}
 
   ngOnInit(): void {
+    this.modus = this.qHandler.getModus();
     this.questions = this.qHandler.getAllQuestions()
     this.correctQuestions = 0;
     this.wrongQuestions = 0;
     this.skippedQuestions = 0;
-    this.untouchedQuestions = this.qHandler.totalQuestions;
+    this.uneditedQuestions = this.qHandler.totalQuestions;
     this.questions?.forEach(q => {
       if (q.answered) {
-        this.untouchedQuestions--;
+        this.uneditedQuestions--;
         if (q.correct) {
           this.correctQuestions++;
         } else {
@@ -49,7 +52,7 @@ export class ResultComponent implements OnInit {
       labels: ['Korrekt', 'Übersprungen', 'Falsch', 'Unbearbeitet'],
       datasets: [
         {
-          data: [this.correctQuestions, this.skippedQuestions, this.wrongQuestions, this.untouchedQuestions],
+          data: [this.correctQuestions, this.skippedQuestions, this.wrongQuestions, this.uneditedQuestions],
           backgroundColor: [
             documentStyle.getPropertyValue('--green-500'),
             documentStyle.getPropertyValue('--yellow-500'),
@@ -76,5 +79,27 @@ export class ResultComponent implements OnInit {
         },
       },
     };
+  }
+
+  getStatus(index: number):number {
+    const cq = this.qHandler.getQuestion(index);
+    
+    // 1 = skipped
+    if (!cq.answered && cq.skipped) {
+      return 1
+    }
+
+    // 3 = correct
+    if (cq.answered && cq.correct) {
+      return 3
+    }
+
+    // 4 = wrong
+    if (cq.answered && !cq.correct) {
+      return 4
+    }
+
+    // 5 = unedited
+    return 5;
   }
 }

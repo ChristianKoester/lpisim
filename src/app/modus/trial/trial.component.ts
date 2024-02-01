@@ -3,7 +3,7 @@ import { Question } from '../../shared/question.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionHandlingService } from '../shared/question-handling.service';
 import { Subscription } from 'rxjs';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ErrorMsg } from '../shared/error-msg.model';
 import { ErrorMessageService } from '../shared/error-message.service';
 
@@ -11,7 +11,7 @@ import { ErrorMessageService } from '../shared/error-message.service';
   selector: 'lpi-trial',
   templateUrl: './trial.component.html',
   styleUrl: './trial.component.css',
-  providers: [MessageService],
+  providers: [ConfirmationService, MessageService],
 })
 export class TrialComponent implements OnInit, OnDestroy {
   private subRoute: Subscription;
@@ -21,7 +21,7 @@ export class TrialComponent implements OnInit, OnDestroy {
   currentQuestion: Question;
   currentIndex: number;
   totalQuestions: number;
-  errorMsg: ErrorMsg = {header:"",body: "", critical: false};
+  errorMsg: ErrorMsg = { header: '', body: '', critical: false };
   maxQuestionsSeen: number = 0;
 
   dialogVisible: boolean = false;
@@ -32,28 +32,31 @@ export class TrialComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private errorMsgServ: ErrorMessageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.subRoute = this.route.paramMap.subscribe((params) => {
       this.quizType = params.get('modus');
       this.qHandler.loadQuestions(params.get('collection'), this.quizType);
+      this.maxQuestionsSeen = 0;
     });
 
     this.subQuestion = this.qHandler.question$.subscribe((question) => {
       this.currentQuestion = question;
       this.currentIndex = this.qHandler.currentIndex;
-      this.maxQuestionsSeen = Math.max(this.currentIndex, this.maxQuestionsSeen);
-      this.totalQuestions = this.qHandler.totalQuestions;
+      this.maxQuestionsSeen = Math.max(
+        this.currentIndex,
+        this.maxQuestionsSeen
+        );
+        this.totalQuestions = this.qHandler.totalQuestions;
     });
 
-    this.subError = this.errorMsgServ.errorMsg$.subscribe(
-      error => { 
-        this.errorMsg = error;
-        this.dialogVisible = true;
-      }
-    );
+    this.subError = this.errorMsgServ.errorMsg$.subscribe((error) => {
+      this.errorMsg = error;
+      this.dialogVisible = true;
+    });
   }
 
   ngOnDestroy(): void {
@@ -86,8 +89,26 @@ export class TrialComponent implements OnInit, OnDestroy {
     this.qHandler.nextQuestion();
   }
 
-  onSubmit() {
+  onSubmit(event: Event) {
     this.qHandler.validateQuestion();
+    if (this.currentIndex === this.totalQuestions - 1) {
+      this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message:
+          'Das war die letzte Frage. Möchtest du zur Auswertung oder deine Antworten nocheinmal überprüfen?',
+        header: 'Letzte Frage',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon: 'pi pi-check',
+        acceptLabel: ' Ergebnis',
+        rejectIcon: 'pi pi-search',
+        rejectLabel: ' Überprüfen',
+        rejectButtonStyleClass: 'p-button-text',
+        accept: () => {
+          this.router.navigateByUrl(`/${this.quizType}/result`);
+        },
+        reject: () => {},
+      });
+    }
   }
 
   onShowSidebar() {
