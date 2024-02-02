@@ -1,0 +1,1768 @@
+
+QUESTION 1:
+
+In capacity planning exercises, which tools assist in listing and identifying processes of interest? (Choose TWO correct answers.)
+
+A. acpid
+B. lsof
+C. pstree
+D. telinit
+
+Answer: BC
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 2:
+
+Which of the following tools are used to measure memory usage? (Choose THREE correct answers.)
+
+A. mpstat
+B. pstree
+C. sar
+D. top
+E. vmstat
+
+Answer: CDE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 3:
+
+In the following output from top, which processes contribute to the percentage of time that the CPU spends in the state of "wa"?
+ Tasks: 193 total, 1 running, 190 sleeping, 2 stopped, 0 zombie
+ Cpu(s): 0.5%us, 0.3%sy, 0.0%ni, 98.2%id, 1.0%wa, 0.0%hi, 0.0%si, 0.0%st
+
+A. Processes waiting for user interaction.
+B. Processes that were already closed and are waiting to be launched again.
+C. Processes that have not been scheduled yet because they haven't been fully loaded into RAM or are in swap.
+D. Processes waiting for IO operations to complete.
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 4:
+
+Which of the following is a side effect of extensive usage of swap space?
+A. The root filesystem may become full because swap space is always located on the system root partition.
+B. The overall system performance may degrade because of heavy hard disk use and memory reorganization.
+C. Since processes always exist completely in either RAM or swap, regular RAM may become unused if the kernel does not move processes back from the swap space to memory.
+D. The memory may become fragmented and slow down the access to memory pages. However, this can be kept to a minimum by the regular use of memfrag -d.
+E. Applications need to restart because their virtual memory addresses change to reflect memory relocation to the swap address area.
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 5:
+
+In the below example output, which columns detail the percent of time the CPU spent running non- kernel code and the percent of time the CPU spent running kernel code? (Choose TWO correct answers.)
+
+ # vmstat 1 100
+ procs -----------memory---------- ---swap-- -----io---- --system-- ----cpu----
+  r b swpd free   buff   cache   si so bi bo in   cs  us sy id  wa
+  0 0 0    282120 134108 5797012 0  0  0  2  0    0   0  0  100 0
+  0 0 0    282120 134108 5797012 0  0  0  0  1007 359 0  0  100 0
+  0 0 0    282120 134108 5797012 0  0  0  0  1117 577 0  0  100 0
+  0 0 0    282120 134108 5797012 0  0  0  0  1007 366 0  0  100 0
+
+A. id
+B. us
+C. wa
+D. sy
+
+Answer: BD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 6:
+
+In this example output, which descriptions match the purpose of the free, buff and cache columns? (Choose THREE correct answers.)
+
+ # vmstat 1 100
+ procs -----------memory---------- ---swap-- -----io---- --system-- ----cpu----
+ r b swpd free   buff   cache   si so bi bo in   cs  us sy id  wa
+ 0 0 0    282120 134108 5797012 0  0  0  2  0    0   0  0  100 0
+ 0 0 0    282120 134108 5797012 0  0  0  0  1007 359 0  0  100 0
+ 0 0 0    282120 134108 5797012 0  0  0  0  1117 577 0  0  100 0
+ 0 0 0    282120 134108 5797012 0  0  0  0  1007 366 0  0  100 0
+
+A. Used swap space
+B. RAM available for filesystem buffers
+C. Available free RAM
+D. RAM used for buffers
+E. RAM used for filesystem cache
+
+Answer: CDE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 7:
+
+In the following output, what percentage of time was the CPU waiting for pending I/O?
+
+ # vmstat 1 100
+ procs -----------memory---------- ---swap-- -----io---- --system-- ----cpu----
+ r b swpd free buff cache si so bi bo in cs us sy id wa
+ 0 0 0 282120 134108 5797012 0 0 0 2 0 0 0 0 100 0
+ 0 0 0 282120 134108 5797012 0 0 0 0 1007 359 0 0 100 0
+ 0 0 0 282120 134108 5797012 0 0 0 0 1117 577 0 0 100 0
+ 0 0 0 282120 134108 5797012 0 0 0 0 1007 366 0 0 100 0
+
+A.   0 
+B.  100
+C. 35.9
+D. 57.7
+E.  36.6
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 8:
+
+In the following output, what is the 5 minute load average for the system?
+
+ # uptime
+ 12:10:05 up 18 days, 19:00, 2 users, load averagE. 0.47, 24.71, 35.31
+
+A.  0.47
+B.  24.71
+C. 35.31
+D. There is no 5 minute interval. It is some value between 0.47 and 24.71.
+E. There is no 5 minute interval. It is some value between 24.71 and 35.31.
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 9:
+
+Which commands below are useful to collect data about remote filesystem connections? (Choose TWO correct answers.)
+
+A. pidstat
+B. nfsiostat
+C. sadf
+D. cifsiostat
+
+Answer: BD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 10:
+
+In the following output, the load averages represent the system load averages for what time frames?
+
+ # uptime
+ 12:10:05 up 18 days, 19:00, 2 users, load averagE. 0.47, 24.71, 35.31
+
+A. 1, 5 and 15 minutes
+B. 1, 15 and 30 minutes
+C. 1, 15, and 30 seconds
+D. 15, 30 and 60 minutes
+E. 15, 30 and 60 seconds
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 11:
+
+Which of the following commands will provide the PIDs of the processes sorted by which are using the most CPU cycles on the Linux system?
+
+A. top
+B. uptime
+C. ps aux
+D. vmstat
+E. freemem
+
+Answer: A
+
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 12:
+
+Which command will report information on memory usage, paging and block input/output?
+
+A. free
+B. memshow
+C. ps
+D. top
+E. vmstat
+
+Answer: E
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 13:
+
+When planning a web server which of the following choices will impact system sizing? (Choose THREE correct answers.)
+
+A. How many concurrent users are expected.
+B. Which hardware vendor has better Linux support.
+C. What type of content will be served.
+D. What scripting languages will the web server support.
+E. Will the OS install be CD, DVD or network based.
+
+Answer: ACD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 14:
+
+When is historical data of resource usage important? (Select THREE correct answers.)
+
+A. Predicting when resources will need to be increased.
+B. Selecting a computer vendor.
+C. Identifying processes killed during out of memory occurrences.
+D. Diagnosing capacity problems.
+E. Troubleshooting a software problem.
+
+Answer: ADE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 15:
+
+Which of the following terms are used to describe 3.x kernel releases? (Choose TWO correct answers.)
+
+A. beta
+B. final
+C. longterm
+D. prerelease
+E. stable
+
+Answer: CE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 16:
+
+What is a key difference between a zImage and bzImage kernel image?
+
+A. zImage is compressed using gzip, bzImage is compressed using bzip2.
+B. zImage is for 2.6 series kernels, bzImage is for 3.x series kernels.
+C. zImage is limited to 64k, bzImage has no such restriction.
+D. zImage gets loaded completely into low memory. bzImage will load into high memory once low memory is full.
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 17:
+
+According to the Filesystem Hierarchy Standard (FHS), what is the path to the Linux kernel source and may be a symbolic link to the real Linux source code? (Please specify the full path with no version information.)
+
+A. 1
+B. 3
+C. 9
+D. 7
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+See also: /usr/src/linux, /usr/src/linux/
+
+QUESTION 18:
+
+After installing a compiled kernel, it can not find any modules that are needed to be loaded. What make target was likely missed while installing the kernel?
+A. ALP
+B. SEO
+C. PTC
+D. GCT
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+See also: make modules_install, modules_install
+
+QUESTION 19:
+
+Which of the following command sequences can be used to extract files contained in a initramfs file (/boot/ initramfs) which is used by the kernel at boot time?
+
+A. cp /boot/initramfs /tmp/initramfs.gz; gzip -c /tmp/initramfs.gz; mkdir /tmp/initramfs.dir ; cd /tmp/ initramfs.dir ; cpio -i < /tmp/initramfs
+B. cp /boot/initramfs /tmp/initramfs.gz; gunzip /tmp/initramfs.gz; mkdir /tmp/initramfs.dir ; cd /tmp/ initramfs.dir ; cpio -i < /tmp/initramfs
+C. cp /boot/initramfs /tmp/initramfs.gz; gunzip /tmp/initramfs.gz; mount /tmp/initramfs /mnt/ -o loop -t initramfs
+D. cp /boot/initramfs /tmp/initramfs.gz; gunzip /tmp/initramfs.gz; mkdir /tmp/initramfs.dir ; cd /tmp/ initramfs.dir ; cpio -e /tmp/initramfs
+E. cp /boot/initramfs /tmp/initramfs.gz; gunzip /tmp/initramfs.gz; mount /tmp/initramfs /mnt/ -o loop -t initrd
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 20:
+
+A new kernel version needs to be compiled to use a new feature. If the old kernel configuration file is available, which make target creates a configuration file for the new kernel based on the configuration of the old kernel?
+
+A. 7
+B. 5
+C. 6
+D. 12
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+See also: oldconfig, make oldconfig
+
+QUESTION 21:
+
+On a server running the 3.4.50-11 Linux kernel, which file in the /boot directory contains the kernel configuration parameters?
+
+A. config-linux-3.4.50-11 
+B. config-3.4.50-11
+C. system-3.4.50-11 
+D. vmlinuz-3.4.50-11 E. rc.config-3.4.50-11
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 22:
+
+After configuring a new kernel, what file under /usr/src/linux/ contains the configuration?
+
+A. 16
+B. 22
+C. 17
+D. 9
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+See also: /usr/src/linux/.config, .config
+
+QUESTION 23:
+
+Which archive format is used to create an initramfs image?
+
+A. gzip
+B. tar
+C. RAR
+D. cpio
+E. bzip2
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 24:
+
+How can the kernel parameter for the maximum size of the shared memory segment (shmmax) be changed to 2GB (2147483648 Bytes) on a running system? (Choose TWO correct answers.)
+
+A. Edit /etc/shmmax and set the parameter to 2147483648.
+B. sysctl shmmax=2147483648
+C. sysctl kernel.shmmax=2147483648
+D. echo 2147483648 > /proc/sys/kernel/shmmax
+E. export kernel.shmmax=2147483648
+
+Answer: CD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 25:
+
+A database application requires a maximum shared memory segment (shmmax) of 2GB (2147483648 Bytes). Which configuration file should be modified to set this kernel parameter permanently? (Specify the full name of the file, including path.)
+
+Answer: /etc/sysctl.conf
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /etc/sysctl.conf
+
+QUESTION 26:
+
+What happens if the Linux kernel can't mount the root filesystem when booting?
+
+A. An error message is shown and the administrator is asked by the kernel to specify a valid root filesystem to continue the boot process.
+B. An error message is shown and the system reboots after a keypress.
+C. An error message is shown and the system boots in maintenance mode.
+D. An error message is shown showing which device couldn't be mounted or informing that init couldn't be found.
+E. An error message is shown stating that the corresponding kernel module couldn't be loaded.
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 27:
+
+What is the correct parameter to pass to the kernel at boot time to force it to use only one of the available processors?
+
+A. maxcpus=1
+B. usecpus=1
+C. smpcpus=1
+D. vcpumx=1
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 28:
+
+What information does the file modules.dep provide?
+
+A. A list of all modules, compiled or not, that are available to the kernel.
+B. A list of modules trusted by the installed kernel.
+C. A list of devices and their module name.
+D. A list of all compiled modules and their dependencies.
+E. A list of modules the kernel needs to run.
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 29:
+
+Which commands are used to load modules into the Linux kernel? (Choose TWO correct answers.)
+
+A. insmod
+B. loadmod
+C. kernload
+D. modprobe
+E. probemod
+
+Answer: AD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 30:
+
+Which command is used to unload a single module currently loaded by the kernel without unloading any modules that it depends upon? (Specify the command with or without path information)
+
+Answer: rmmod
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: rmmod, /sbin/rmmod
+
+QUESTION 31:
+
+Which directory contains the system-specific udev rule files? (Specify the absolute path including the directory name)
+
+Answer: /etc/udev/rules.d
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /etc/udev/rules.d, /etc/udev/rules.d/
+
+QUESTION 32:
+
+What is the purpose of the command udevadm monitor?
+
+A. It listens to kernel events produced by a udev rule and print information to the console.
+B. It monitors the /dev directory for new devices.
+C. It monitors the udev process and prints performance statistics to the console.
+D. It communicates with D-Bus to setup new devices.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 33:
+
+Which keyword is used in the /etc/inittab file to define the SysV-init default system runlevel? A.
+
+Answer: initdefault
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: initdefault
+
+QUESTION 34:
+
+Please enter the complete path to the main SysV init process configuration file. A.
+
+Answer: /etc/inittab
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /etc/inittab
+
+QUESTION 35:
+
+Which option to the update-rc.d command will cause the removal of all symlinks to /etc/rcX.d/*test2 even when the script /etc/init.d/test2 still exists?
+
+A. -d
+B. -f
+C. -n
+D. -r
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 36:
+
+What is the full path to the directory which contains the scripts (or links to the original scripts) to run while the system boots to SysV-init runlevel 2?
+
+Answer: /etc/init.d/rc2.d
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /etc/rc2.d, /etc/rc2.d/, /etc/init.d/rc2.d, /etc/init.d/rc2.d/
+
+QUESTION 37:
+
+If all of the following files and/or symlinks exist in a SysV-init runlevel directory, which of the following will be executed first when booting the system directly into the runlevel?
+
+A. S99lpi
+B. K99lpi
+C. PRE-S99lpi
+D. S98lpi
+E. S99a-lpi
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 38:
+
+A system with SysV-init has a service installed called apache2. Which file controls the start and stop of this service and is referenced by the various runlevel directories?
+A. /etc/init.d/apache2
+B. /etc/rc2.d/70apache2
+C. /etc/rc2.d/apache2
+D. /etc/rc2.d/apache2.start
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 39:
+
+After changing the default runlevel in the SysV-init configuration file, the system boots in a different than intended runlevel. Where else could this different runlevel be defined?
+
+A. In the /etc/sysctl.conf
+B. In the boot loader configuration file
+C. In the /etc/runlevel file
+D. In the /boot/initramfs file
+E. In the /etc/rc.d/rc.local file
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 40:
+
+Why is the root file system mounted read-only during boot and remounted with write permission later on?
+
+A. Because if problems with the root file system are detected during the boot, fsck can be run, without risk of damage.
+B. Because this way crackers cannot collect information about root with boot sniffers.
+C. To avoid writing to the disk, unless the root password is known.
+D. To avoid other operating systems overwriting the Linux root partition.
+E. Because the disk has its own write protection that cannot be changed by the operating system.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 41:
+
+During booting, when the Linux kernel loads an initramfs file, which command from the initramfs will be executed first, if present?
+
+A. /init
+B. /initrd
+C. /linuxrc
+D. /rc.local
+E. /sbin/init
+
+Answer: A
+
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 42:
+
+In case the file containing the Linux kernel is lost, what happens when the system is booting?
+
+A. The system starts normally since the bootloader copies the kernel to the master boot record of the hard disk.
+B. Instead of the kernel, the initramfs is loaded and instructed to mount the root filesystem and reinstall the kernel from the original package or from source.
+C. The bootloader mounts the root filesystem read-only and launches /bin/sh directly in order to allow the administrator to reinstall the kernel.
+D. Without a kernel a system cannot boot and, depending on the bootloader, an error is displayed.
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 43:
+
+A Linux server is running in single user mode for regular maintenance. Which commands are used to restore the server to its usual runlevel? (Choose TWO correct answers.)
+
+A. telinit 0
+B. shutdown -r now
+C. sync
+D. shutdown -h now
+E. reboot
+
+Answer: BE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 44:
+
+A server requires a GRUB2 boot option which will always boot to runlevel 1. Which line of a GRUB2 configuration file starts the beginning of the settings needed to make this new choice available?
+
+A. initrd
+B. linux
+C. menuentry
+D. runlevel
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 45:
+
+Which file tells GRUB the paths of the filesystem partitions in both Linux format and in the GRUB syntax? (Specify the file name only with no path information)
+
+Answer: device.map
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: device.map
+
+QUESTION 46:
+
+Where is the LILO boot loader code typically installed on a system with only a single Linux installation and no other operating systems?
+
+A. In the master boot record.
+B. In the boot sector.
+C. In the /boot directory.
+D. At the start of the kernel.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 47:
+
+Which command is used to install a new LILO boot loader?
+
+A. lilo
+B. lilo-config
+C. lilo-install
+D. install-lilo
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 48:
+
+Which files are updated as devices are mounted and unmounted to provide information on the currently mounted devices and the options used? (Choose TWO correct answers.)
+
+A. /proc/dtab
+B. /etc/mtab
+C. /etc/fstab
+D. /proc/mounts
+E. /proc/devices
+
+Answer: BD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 49:
+
+Consider the following /etc/fstab file:
+
+ /dev/hda1 swap swap defaults 0 0
+ /dev/hda2 / ext2 defaults 1 1
+ /dev/hda3 /home ext2 defaults 1 2
+ none /proc proc defaults 0 0
+ /dev/sdb1 /media/usb0 vfat user,noauto 0 0
+
+What is one of the possible commands that an ordinary (non-root) user can use to mount the /dev/sdb1 partition on the /media/usb0 mount point? (Please enter the command with all parameters and/or options but without any file system type options.)
+
+Answer: mount /dev/sdb1
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: mount /dev/sdb1, mount /media/usb0, /bin/mount /dev/sdb1, /bin/mount /media/usb0, mount / media/usb0/, /bin/mount /media/usb0/
+
+QUESTION 50:
+
+Which directory in /dev/disk/ can be used to determine the UUID of a connected hard disk? A.
+
+Answer: /dev/disk/by-uuid
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /dev/disk/by-uuid, by-uuid, /dev/disk/by-uuid/ 
+
+QUESTION 51:
+
+What keyword is missing in the following line from /etc/fstab in order to make a USB flash device writeable by the user fred when mounted:
+
+ /dev/sda1 /mnt/usbflash vfat defaults,users,____=fred,umask=022, 0 0 
+(Provide the option name only without any settings)
+
+Answer: owner
+
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 52:
+
+After a lot of write operations, the administrator want to ensure that the kernel flushes the file system buffers to disk. Which command will accomplish this? (Specify ONLY the command without any path or parameters.)
+
+Answer: sync
+
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 53:
+
+Due to extreme system use, a Linux system requires some additional swap space. To initialize 5GB of additional swap space, which combination of commands should be used?
+
+A. dd if=/dev/zero of=/tmp/swapfile bs=1024 count=5120000; mkswap /tmp/swapfile; mount /tmp/swapfile
+B. dd if=/dev/zero of=/tmp/swapfile bs=1024 count=5120000; swapon /tmp/swapfile
+C. dd if=/dev/zero of=/tmp/swapfile bs=1024 count=5120000; mkswap /tmp/swapfile; swapon /tmp/swapfile
+D. touch -5G /tmp/swapfile; swapon /tmp/swapfile
+E. mkswap /tmp/swapfile 512000; swapon /tmp/swapfile
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 54:
+
+What does a 0 in the last field (fsck order) of /etc/fstab indicate about the filesystem?
+
+A. The filesystem should be checked before filesystems with higher values.
+B. The filesystem should be checked after filesystems with higher values.
+C. The filesystem check counter is ignored.
+D. The filesystem has been disabled from being checked and mounted on the system.
+E. The filesystem does not require an fsck check when being mounted.
+
+Answer: E
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 55:
+
+Which of the following best describes the format of the /etc/fstab file?
+
+A. device name; filesystem type; mount point; mount options; dump filesystem; fsck order
+B. device name; mount point; filesystem type; mount options; dump filesystem; fsck order
+C. device name; mount point; mount options; filesystem type; dump filesystem; fsck order
+D. mount point; filesystem type; device name; mount options; dump filesystem; fsck order
+E. mount point; device name; filesystem type; mount options; dump filesystem; fsck order
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 56:
+
+Which command turns an existing ext2 filesystem non-destructively into an ext3 filesystem? (Specify ONLY the command without any path or parameters.)
+
+Answer: tune2fs
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /sbin/tune2fs, tune2fs
+
+QUESTION 57:
+
+How can the label root be added to the ext2 filesystem on /dev/sda1?
+
+A. relabel /dev/sda1 root
+B. tune2fs -L root /dev/sda1
+C. echo 'root' > /proc/fs/sda1/label
+D. labelfs --device /dev/sda1 root
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 58:
+
+Which command is used to create a ISO9660 filesystem? (Specify ONLY the command without any path or parameters.)
+
+Answer: mkisofs
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: mkisofs, genisoimage
+
+QUESTION 59:
+
+Which of the following is a CD-ROM filesystem standard?
+
+A. OSI9660
+B. ISO9660
+C. SR0FS
+D. ISO8859
+E. ROM-EO
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 60:
+
+What is the minimum number of disks required in a fully redundant RAID5 array?
+
+A. 1
+B. 2
+C. 3
+D. 4
+E. 5
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 61:
+
+Which file in /proc contains information on the status of local software RAID devices?
+
+A. /proc/raidstat
+B. /proc/mdstat
+C. /proc/raidstatus
+D. /proc/mdstatus
+E. /proc/raid/status
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 62:
+
+Which single command will simulate a failed device within a RAID 5 array?
+
+A. mdadm --remove /dev/md0 /dev/sdd1
+B. mdadm --zero-superblock /dev/sdf3
+C. mdadm --force-fault /dev/md2 /dev/sde2
+D. mdadm --fail /dev/md0 /dev/sdc1
+E. mdadm /dev/md0 --offline /dev/sdc1
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 63:
+
+Which RAID level value must be used with Linux software RAID in order to create an array of mirrored devices?
+
+A. 1
+B. 5
+C. 6
+D. container
+E. mirrorstripe
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 64:
+
+Which of the following commands is used to set up a RAID volume?
+
+A. makerd
+B. mdadm
+C. mkfs.raid
+D. makeraid
+E. rdconfig
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 65:
+
+The IDE hard drive /dev/hda does not have DMA enabled. Which command must be run to enable DMA on it?
+
+A. hdparm -d /dev/hda
+B. hdparm --dma /dev/hda
+C. hdparm --dma /dev/hda1
+D. hdparm -d /dev/hda1
+E. hdparm -d 1 /dev/hda
+
+Answer: E
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 66:
+
+A system has one hard disk and one CD writer which are both connected to SATA controllers. Which device represents the CD writer?
+
+A. /dev/hdb
+B. /dev/sdd
+C. /dev/scd1
+D. /dev/sr0
+E. /dev/sr1
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 67:
+
+The correct command sequence to create and mount logical volumes on a Linux system is:
+
+A. lvcreate, pvcreate, vgcreate, mkfs, mount
+B. pvcreate, vgcreate, lvcreate, mkfs, mount
+C. vgcreate, lvcreate, pvcreate, mount, mkfs
+D. mkfs, pvcreate, vgcreate, lvcreate, mount
+E. pvcreate, lvcreate, vgcreate, mkfs, mount
+
+Answer: B
+
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 68:
+
+What is the purpose of the command vgextend?
+
+A. Extend a volume group's footprint on disk.
+B. Add physical volumes to an existing volume group.
+C. Increase the number of days between scheduled error checking.
+D. Create a volume group which uses all available space on disk.
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 69:
+
+What command will remove a physical volume from a volume group? (Specify ONLY the command without any path or parameters.)
+
+Answer: vgreduce
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: vgreduce, /sbin/vgreduce
+
+QUESTION 70:
+
+Which two LVM commands are missing from the following sequence which is used to create a logical volume and make use of it on a Linux system?
+
+ pvcreate, 	, 	, mkfs, mount
+
+A. lvcreate, mdadm
+B. lvcreate, vgcreate
+C. lvmcreate, vgcreate
+D. vgcreate, lvcreate
+E. vgcreate, mdadm
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 71:
+
+Considering the following kernel IP routing table below, which of the following commands must be used to remove the route to the network 10.10.1.0/24? (Select TWO answers)
+
+ Kernel IP routing table
+ Destination Gateway Genmask Flags Metric Ref Use Iface 
+ 203.0.113.162 0.0.0.0 255.255.255.255 UH 0 0 0 ppp0
+ 172.16.87.0 0.0.0.0 255.255.255.0 U 0 0 0 eth0
+ 192.168.246.0 0.0.0.0 255.255.255.0 U 0 0 0 eth1
+ 10.10.1.0 192.168.246.11 255.255.255.0 UG 0 0 0 eth1
+ 127.0.0.0 0.0.0.0 255.0.0.0 U 0 0 0 lo
+ 0.0.0.0 203.0.113.162 0.0.0.0 UG 0 0 0 ppp0
+
+A. ip net delete 10.10.1.0/24 
+B.  route del 10.10.1.0/24
+C.  route del -net 10.10.1.0/24
+D. route del 10.10.1.0/24 gw 192.168.246.11
+E.  ip route delete 10.10.1.0/24
+
+Answer: CE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 72:
+
+Which of the following wireless tools can be used to check the wireless network link quality? (Choose TWO correct answers.)
+
+A. iwconfig
+B. iwlink
+C. iwscan
+D. iwifi
+E. iw
+
+Answer: AE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 73:
+
+Which of the following files are used to resolve hostnames to IP addresses? (Choose TWO correct answers.)
+
+A. /etc/systems
+B. /etc/hosts
+C. /etc/network
+D. /etc/dns.conf
+E. /etc/resolv.conf
+
+Answer: BE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 74:
+
+Which of the following commands will list the IPv4 neighbors of the current system? This includes IP and MAC addresses. (Choose TWO correct answers.)
+
+A. arp
+B. ifconfig -lv eth0
+C. netstat -al
+D. ip neigh show
+
+Answer: AD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 75:
+
+Which of the following commands can be used to list IPv4 addresses and MAC addresses for IP devices that the system has seen on the local network?
+
+A. arp
+B. ifconfig
+C. ipadm
+D. iwlist
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 76:
+
+What is the command to add another IP address (192.168.1.2) to a network interface (eth0) that already has (at least) one IP address in the 192.168.1.0/24 subnet?
+
+A.  ip add addr 192.168.1.2/32 dev eth0
+B.  ifconfig eth0 192.168.1.2 netmask 255.255.255.255
+C. ip addr add 192.168.1.2/32 dev eth0
+D. ipconfig eth0 192.168.1.2
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 77:
+
+The following is an excerpt from the output of tcpdump -nli eth1 'udp': 13:03:17.277327 IP 192.168.123.5.1065 > 192.168.5.112.53: 43653+ A? lpi.org. (25)
+13:03:17.598624 IP 192.168.5.112.53 > 192.168.123.5.1065: 43653 1/0/0 A 198.51.100.42 (41)
+
+Which network service or protocol was used?
+
+A. FTP
+B. HTTP
+C. SSH
+D. DNS
+E. DHCP
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 78:
+
+According to the tcpdump output below, what is the IP address of the client host?
+
+ 02:12:40.511381 IP 192.168.246.11.1045 > 192.168.246.1.22: S 3838532429:3838532429(0) win 5840
+  <mss 1460,sackOK,timestamp 31325740,nop,wscale 2>
+
+ 02:12:40.511540 IP 192.168.246.1.22 > 192.168.246.11.1045: S 1209330085:1209330085(0) ack 383853
+  2430 win 5792 <mss 1460,sackOK,timestamp 11553457 3132574,nop,wscale 0>
+
+ 02:12:40.511755 IP 192.168.246.11.1045 > 192.168.246.1.22: . ack 1 win 1460 <nop,nop,timestamp 3
+  132574 11553457>
+
+ 02:12:40.515122 IP 192.168.246.1.22 > 192.168.246.11.1045: P 1:26(25) ack 1 win 5792
+  <nop,nop,timestamp 11553460 3132574>
+
+ 02:12:40.515511 IP 192.168.246.11.1045 > 192.168.246.1.22: . ack 26 win 1460 <nop,nop,timestamp
+  3132578 11553460>
+
+ 02:12:40.515952 IP 192.168.246.11.1045 > 192.168.246.1.22: P 1:23(22) ack 26 win 1460
+  <nop,nop,timestamp 3132578 11553460>
+
+Answer: 192.168.246.11
+
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 79:
+
+Which program lists information about files and network connections opened by processes? (Specify ONLY the command without any path or parameters.)
+
+Answer: lsof
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: lsof, /usr/bin/lsof
+
+QUESTION 80:
+
+The following is an excerpt from the output of tcpdump -nli eth1:
+
+ 13:03:17.277327 IP 192.168.123.5.1065 > 192.168.5.112.21: Flags [.], ack 1 (truncated)
+ 13:03:17.598624 IP 192.168.5.112.21 > 192.168.123.5.1065: Flags [P.], seq (truncated)
+
+Which network service or protocol was used?
+
+A. FTP
+B. HTTP
+C. SSH
+D. DNS
+E. DHCP
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 81:
+
+Running tcpdump -nli eth1 'tcp' shows the following output:
+
+ 14:41:53.694538 IP 10.1.52.145.51738 > 24.215.7.162.143: Flags [.], ack 33051, win 1002, options
+ [nop,nop,TS val 36789130 ecr 1746004159], length 0
+What is the source IP address of this packet? (Please specify the answer in digits and dots ONLY.)
+
+Answer: 10.1.52.145
+
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 82:
+
+Which of the following commands can be used to script interactions with various TCP or UDP services?
+
+A. ftp
+B. nc
+C. tcpdump
+D. strings
+E. wget
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 83:
+
+A correctly formatted entry has been added to /etc/hosts.deny to prevent certain clients from connecting to a service but this is having no effect. What could be the cause of this? (Choose TWO correct answers.)
+
+A. tcpd needs to be sent the HUP signal.
+B. The service needs to be restarted.
+C. The machine needs to be restarted.
+D. There is a conflicting entry in /etc/hosts.allow.
+E. The service does not support tcpwrapper.
+
+Answer: DE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 84:
+
+Which /etc/hosts.allow entries will permit access to sshd for users from the 192.168.1.0/24 subnet? (Choose TWO correct answers.)
+
+A. sshd : 192.168.1. B.  sshd : 192.168.1
+C. sshd : 192.168.1.0 netmask 255.255.255.0 
+D.  sshd : 192.168.1.0/255.255.255.0
+E.  sshd : 192.168.1.0
+
+Answer: AD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 85:
+
+A network client has an ethernet interface (eth0) configured with an IP address in the subnet 192.168.0.0/24. This subnet has a router, with the IP address 192.168.0.1, that connects this subnet to the Internet. What needs to be done on the client to enable it to use the router as its default gateway? (Choose TWO correct answers.)
+A. route add default gw 192.168.0.1 eth0
+B. ifconfig eth0 defaultroute 192.168.0.1
+C. ip route add default via 192.168.0.1 dev eth0
+D. echo defaultroute 192.168.0.1 >> /etc/resolv.conf
+E. route add defaultgw=192.168.0.1 if=eth0 
+
+Answer: AC
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 86:
+
+What should be done to ensure a client machine uses the recursive nameserver running on the IP address 192.168.0.1? (Choose TWO correct answers.)
+
+A. Add nameserver 192.168.0.1 to /etc/resolv.conf.
+B. Run route add nameserver 192.168.0.1.
+C. Run ifconfig eth0 nameserver 192.168.0.1.
+D. Ensure that the dns service is listed in the hosts entry in the /etc/nsswitch.conf file.
+E. Run bind add nameserver 192.168.0.1.
+
+Answer: AD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 87:
+
+The users of the local network complain that name resolution is not fast enough. Enter the command, without the path or any options, that shows the time taken to resolve a DNS query.
+
+Answer: dig
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: dig, time dig, time host, time nslookup
+
+QUESTION 88:
+
+What should be done after updating the configuration file for syslogd in order to make the changes become effective? (Choose TWO correct answers.)
+
+A. No action is required, syslogd will notice the updated configuration file after a few minutes.
+B. Send the HUP signal to the syslogd process.
+C. Restart the syslogd service.
+D. Run the command syslogd -u.
+Answer: BC
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 89:
+
+What does the -p3 option to the patch command do?
+
+A. It will strip off path information from each file mentioned in the patch file up to and including the third / character.
+B. patch continues execution as long as there are three or fewer errors.
+C. It instructs patch to look up to three lines of context before or after the declared line in the original file for a match.
+D. patch will keep three previous versions of each file in the output to prevent loss of change history.
+E. It instructs patch to conform more strictly to the POSIX standard.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 90:
+
+When a makefile is included in a source code package, what are commonly defined targets in the file?
+
+A. CFLAGS, CPPFLAGS, LIBS, LDFLAGS
+B. clean, install, uninstall
+C. PATHS, DESTDIR, LIBS, LDFLAGS
+D. prefix, exec_prefix, bindir, mandir
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 91:
+
+Which of the following files will be looked for and used by GNU make, if one of them exists, unless a different file is specified on the command line when trying to compile software from source code? (Choose TWO correct answers.)
+
+A. configure
+B. config.h.in
+C. makefile
+D. Makefile
+E. Makefile.in 
+
+Answer: CD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 92:
+
+A regular user, joe, has just run:
+
+ ./configure && make && make install
+
+to build and install a program. However, the installation fails. What could be done to install the program? (Choose TWO correct answers.)
+
+A. Install the binaries manually with suinstall.
+B. Run make install with root privileges.
+C. Do not run ./configure in order to maintain the default configuration for correct installation.
+D. Rerun ./configure with a --prefix option where the user has permissions to write.
+E. Run make install_local to install into /usr/local/.
+
+Answer: BD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 93:
+
+Which of the following commands will securely copy the directory ./fyf/ to /var/tmp/ on the remote host deltaur using the remote user account kevin?
+
+A. rsync -a -e ssh kevin@deltaur:/var/tmp/ fyf/
+B. rsync -a -u kevin -e ssh fyf/ deltaur:/var/tmp/
+C. rsync -a -u kevin -e ssh deltaur:/var/tmp/ fyf/
+D. rsync -a -e ssh fyf/ kevin@deltaur:/var/tmp/
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 94:
+
+What is the device name for the first SCSI tape drive on a system when used without automatic 
+rewinding after each write operation? (Please specify the full path to the device.)
+
+Answer: /dev/nst0
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /dev/nst0
+
+QUESTION 95:
+
+Which of the following are common backup systems used in Linux? (Choose TWO correct answers.)
+
+A. Amanda
+B. Bacula
+C. DrBackup
+D. BREWBackup
+E. SARcheck
+
+Answer: AB
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 96:
+
+Which of the following commands will erase the contents of the /dev/sdb3 partition?
+
+A. rm /dev/sdb3
+B. dd if=/dev/zero of=/dev/sdb3
+C. dd of=/dev/zero if=/dev/sdb3
+D. umount /dev/sdb3
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 97:
+
+Which file contains the text message that is displayed after logging into the console? (Specify the full name of the file, including path.)
+
+Answer: /etc/motd
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /etc/motd
+
+QUESTION 98:
+
+Which file contains the message that is displayed above the login prompt of the system console? (Specify the full name of the file, including path.)
+
+Answer: /etc/issue
+
+Section: (none) 
+
+Explanation:/Reference:
+See also: /etc/issue
+
+QUESTION 99:
+
+What mechanism does collectd use to gather monitoring information on systems?
+
+A. It uses a library of plugins.
+B. A master server connects to a collectd service on each machine to retrieve the information.
+C. It collects its own information on each server and sends that to a master server.
+D. It makes SNMP queries to the clients being monitored.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 100:
+
+What option in the collectd configuration file is required in order to define what to start monitoring?
+
+A. LoadModule
+B. Module
+C. Plugin
+D. LoadPlugin
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 101:
+
+How is the source code for the main Linux kernel modules distributed?
+
+A. It is included with the Linux kernel source code.
+B. The kernel modules are downloaded on demand as they are used during compilation.
+C. The kernel modules have their own release cycle and can be maintained separately from the Linux kernel source.
+D. It is provided as a separate download alongside the Linux kernel source code of the same version.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 102:
+
+What is the functionality that PXE provides?
+
+A. The ability to boot a computer using its network interface.
+B. The ability to launch an remote X11 desktop on a computer.
+C. The ability to verify a system's configuration after completing the boot process.
+D. The ability to verify a system's configuration before completing the boot process.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 103:
+
+What are the main network services used by the PXE protocol? (Choose TWO correct answers.)
+
+A. DNS
+B. DHCP
+C. HTTP
+D. TFTP
+E. NFS
+
+Answer: BD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 104:
+
+What is the purpose of the smartd daemon?
+
+A. It is a user space daemon used for reading smart cards and integrated circuit chips.
+B. It attempts to automatically repair file systems upon a failed file system check.
+C. It monitors process activity and helps the kernel decide which processes to kill when the kernel 
+overcommits.
+D. It monitors certain disk drives and attempts to predict when they will fail.
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 105:
+
+What component of a system does smartd monitor?
+
+A. CPU
+B. RAM
+C. Hard drives
+D. Ethernet traffic
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 106:
+
+Which of the following are common Linux filesystem types used for root partitions? (Choose THREE correct answers.)
+
+A. ext4
+B. VFAT
+C. NTFS
+D. XFS
+E. Btrfs
+
+Answer: ADE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 107:
+
+Where would fsck put any unreferenced file or file fragments on a ext4 filesystem?
+
+A. recover
+B. lost+found 
+C. back
+D. lost
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 108:
+
+What is the main template file used by autofs?
+
+A. default.maps
+B. auto.conf
+C. auto.master
+D. autofs.master
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 109:
+
+The main configuration file for autofs has this entry:
+
+ /home /etc/auto.home
+
+What is the meaning of the /etc/auto.home file?
+
+A. It has the indirect maps for the mounting of file systems.
+B. It has configuration information, such as passwords and keys, for the remote file server.
+C. It has configuration information on settings for the /home mount point.
+D. It is the holds the SSL key to allow authentication to the remote file server.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 110:
+
+Which of the following is an example path to a Linux software RAID array?
+
+A. /dev/raid0
+B. /dev/rd1
+C. /dev/pr0
+D. /dev/md1
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 111:
+
+What mount option must be used in /etc/fstab when mounting an iSCSI target?
+
+A. _santarget
+B. iscsi
+C. waitiscsi
+D. _netdev
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 112:
+
+What are the options to node.startup in the iscsid.conf file? (Choose TWO correct answers.)
+
+A. login
+B. initiate
+C. manual
+D. discover
+E. automatic
+
+Answer: CE
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 113:
+
+What command is used to make an exact copy, at a single point in time, of a logical volume for backup purposes?
+
+A. lvsnap
+B. lvsnapshot
+C. lvcreate
+D. lvcopy
+E. lvclone
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 114:
+
+What action should be performed after increasing the size of a logical volume?
+
+A. Run vgresize.
+B. Increase the size of the filesystem used for the logical volume.
+C. Run lvresize.
+D. Remount the logical volume.
+
+Answer: B
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 115:
+
+Which command can be used to scan a specified network looking for IP addresses that appear to be in use?
+
+A. nmap
+B. tcpdump
+C. ip
+D. netscan
+E. hostdiscover
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 116:
+
+Which of the following filter keywords for tcpdump specify the transfer direction for network packets? (Choose TWO correct answers.)
+
+A. source
+B. src
+C. dest
+D. src or dst
+E. both
+
+Answer: BD
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 117:
+
+What is incorrect about these entries in /etc/hosts which could be causing host name lookup problems with host2?
+
+ host1 192.168.1.12
+ host2 192.168.1.12
+
+A. Two host names are using the same IP address.
+B. The server doing the query is on a different subnet.
+C. The fields are out of order.
+D. host2 is not a fully qualified domain name.
+
+Answer: C
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 118:
+
+Under which of the following circumstances would the command ping output the string (DUP!)?
+
+A. When the ICMP packets are send to a broadcast address and multiple hosts respond.
+B. When the host being sent ICMP packets is on a different network.
+C. When the router responds to the ICMP packet in addition to the host receiving the ICMP packets.
+D. When the host sending the ICMP packet is the same host as the one receiving the ICMP packets.
+
+Answer: A
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 119:
+
+Which one of these directories should not be backed up?
+
+A. /backup
+B. /etc
+C. /opt
+D. /proc
+E. /var/log
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:
+
+QUESTION 120:
+
+The following command has just been run successfully: cd /opt; tar xvf /dev/nst0;
+What will happen if the command sequence is run again?
+
+A. An error saying that there is no tape present is generated because the tape has been ejected after being used.
+B. The contents of /opt will be restored again.
+C. The entire contents of /opt will be replaced with the contents of the next file on the tape.
+D. The contents of /opt will have additional content added from the next file on the tape.
+
+Answer: D
+Section: (none) 
+
+Explanation:/Reference:

@@ -30,6 +30,19 @@ export class HeaderComponent implements OnInit {
             routerLink: 'learn/single/lpic102',
             icon: 'pi pi-fw pi-book',
           },
+          {
+            separator: true
+          },
+          {
+            label: 'LPIC 201',
+            routerLink: 'learn/single/lpic201',
+            icon: 'pi pi-fw pi-book',
+          },
+          {
+            label: 'LPIC 202',
+            routerLink: 'learn/single/lpic202',
+            icon: 'pi pi-fw pi-book',
+          },
         ]
       },
       {
@@ -44,6 +57,19 @@ export class HeaderComponent implements OnInit {
           {
             label: 'LPIC 102',
             routerLink: 'check/lpic102',
+            icon: 'pi pi-fw pi-book',
+          },
+          {
+            separator: true
+          },
+          {
+            label: 'LPIC 201',
+            routerLink: 'check/lpic201',
+            icon: 'pi pi-fw pi-book',
+          },
+          {
+            label: 'LPIC 202',
+            routerLink: 'check/lpic202',
             icon: 'pi pi-fw pi-book',
           },
         ]
@@ -62,6 +88,19 @@ export class HeaderComponent implements OnInit {
             routerLink: 'exam/lpic102',
             icon: 'pi pi-fw pi-book',
           },
+          {
+            separator: true
+          },
+          {
+            label: 'LPIC 201',
+            routerLink: 'exam/lpic201',
+            icon: 'pi pi-fw pi-book',
+          },
+          {
+            label: 'LPIC 202',
+            routerLink: 'exam/lpic202',
+            icon: 'pi pi-fw pi-book',
+          },
         ]
         
       },  
@@ -77,6 +116,19 @@ export class HeaderComponent implements OnInit {
           {
             label: 'LPIC 102',
             routerLink: 'learn/list/lpic102',
+            icon: 'pi pi-fw pi-book',
+          },
+          {
+            separator: true
+          },
+          {
+            label: 'LPIC 201',
+            routerLink: 'learn/list/lpic201',
+            icon: 'pi pi-fw pi-book',
+          },
+          {
+            label: 'LPIC 202',
+            routerLink: 'learn/list/lpic202',
             icon: 'pi pi-fw pi-book',
           },
         ]

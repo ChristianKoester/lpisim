@@ -16,7 +16,13 @@ export class InMemoryDataService implements InMemoryDbService {
 
     const lpic102 = await this.fps.getQuestions('lpic102')
       .then((data) => { return data } );
+
+    const lpic201 = await this.fps.getQuestions('lpic201')
+      .then((data) => { return data } );
+
+    const lpic202 = await this.fps.getQuestions('lpic202')
+      .then((data) => { return data } );
       
-    return { lpic101, lpic102 };
+    return { lpic101, lpic102, lpic201, lpic202 };
   }
 }
