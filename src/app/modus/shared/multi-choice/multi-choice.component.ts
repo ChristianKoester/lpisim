@@ -56,9 +56,6 @@ export class MultiChoiceComponent implements OnInit, OnDestroy {
         this.currentQuestion.answers[index].chosen = false;
       }
     }
-    // this.selectedAnswers.forEach(element => {
-    //   this.currentQuestion.answers[element].chosen=true;
-    // });
     let correct: boolean = true;
     this.currentQuestion.answers.forEach((element) => {
       if (element.correct != element.chosen) correct = false;

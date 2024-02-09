@@ -44,6 +44,7 @@ export class ResultComponent implements OnInit {
       }
     })
     this.wrongQuestions = Math.max(this.wrongQuestions, this.qHandler.totalWrongQuestions);
+    this.uneditedQuestions -= this.skippedQuestions;
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');

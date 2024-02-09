@@ -16,9 +16,7 @@ export class OptionsService implements OnInit {
     this.loadOptions();
   }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   loadOptions(): void {
     const loadedItem = this.localStorage.getData('options');
