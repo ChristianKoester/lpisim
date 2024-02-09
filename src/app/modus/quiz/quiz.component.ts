@@ -8,12 +8,12 @@ import { ErrorMsg } from '../shared/error-msg.model';
 import { ErrorMessageService } from '../shared/error-message.service';
 
 @Component({
-  selector: 'lpi-trial',
-  templateUrl: './trial.component.html',
-  styleUrl: './trial.component.css',
+  selector: 'lpi-quiz',
+  templateUrl: './quiz.component.html',
+  styleUrl: './quiz.component.css',
   providers: [ConfirmationService, MessageService],
 })
-export class TrialComponent implements OnInit, OnDestroy {
+export class QuizComponent implements OnInit, OnDestroy {
   private subRoute: Subscription;
   private subQuestion: Subscription;
   private subError: Subscription;
